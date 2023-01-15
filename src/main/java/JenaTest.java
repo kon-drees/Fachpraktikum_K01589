@@ -9,7 +9,8 @@ public class JenaTest {
     static final String inputFileName  = "ArgSchlafstörungen_arg.n3";
     static String personURI    = "http://somewhere/JohnSmith";
     static String fullName     = "John Smith";
-
+ String name = "Max Mustermann";
+ 
     public static void main(String[] args) {
         // some definitions
         String personURI    = "http://somewhere/JohnSmith";
