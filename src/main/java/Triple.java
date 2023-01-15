@@ -3,6 +3,16 @@ public class Triple {
     private Entity subject;
     private Predicate predicate;
     private Entity object;
+
+    public int getArgStrenght() {
+        return argStrenght;
+    }
+
+    public void setArgStrenght(int argStrenght) {
+        this.argStrenght = argStrenght;
+    }
+
+    private int argStrenght = 1;
      // Metadata
 
 
