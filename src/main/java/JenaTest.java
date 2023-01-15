@@ -20,6 +20,8 @@ public class JenaTest {
         // create an empty Model
         Model model = ModelFactory.createDefaultModel();
 
+
+
         // create the resource
         //   and add the properties cascading style
         Resource johnSmith
