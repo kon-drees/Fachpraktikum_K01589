@@ -1,9 +1,11 @@
-public class SchemaNode extends Node {
+public class SchemaNode implements Node {
     private Triple triple;
     private String claim;
 
+    private String label;
+
     public SchemaNode(String label, Triple triple, String claim) {
-        super(label);
+        this.setLabel(label);
         this.triple = triple;
         this.claim = claim;
     }
@@ -22,5 +24,15 @@ public class SchemaNode extends Node {
 
     public void setClaim(String claim) {
         this.claim = claim;
+    }
+
+    @Override
+    public String getLabel() {
+        return this.label ;
+    }
+
+    @Override
+    public void setLabel(String label) {
+        this.label = label;
     }
 }
