@@ -1,8 +1,16 @@
-public class Triple {
+package de.nrw.hagen.fp1589.domain;
+
+import java.util.List;
+
+public class InformationNode {
 
     private Entity subject;
     private Predicate predicate;
     private Entity object;
+    //Nur SchemaNodes erlaubt. Art der Verknuepfung ergibt sich aus SchemaNode.
+    private List<SchemaNode> nodes;
+    private int argStrenght = 1;
+
 
     public int getArgStrenght() {
         return argStrenght;
@@ -12,11 +20,11 @@ public class Triple {
         this.argStrenght = argStrenght;
     }
 
-    private int argStrenght = 1;
+
      // Metadata
 
 
-    public Triple(Entity subject, Predicate predicate, Entity object) {
+    public InformationNode(Entity subject, Predicate predicate, Entity object) {
         this.subject = subject;
         this.predicate = predicate;
         this.object = object;

@@ -1,11 +1,15 @@
-public class Entity {
+package de.nrw.hagen.fp1589.domain;
+
+public class Predicate {
 
     private String label;
     private String iri;
+    private String schema;
 
-    public Entity(String label, String iri) {
+    public Predicate(String label, String iri, String schema) {
         this.label = label;
         this.iri = iri;
+        this.schema = schema;
     }
 
     public String getLabel() {
@@ -22,5 +26,13 @@ public class Entity {
 
     public void setIri(String iri) {
         this.iri = iri;
+    }
+
+    public String getSchema() {
+        return schema;
+    }
+
+    public void setSchema(String schema) {
+        this.schema = schema;
     }
 }

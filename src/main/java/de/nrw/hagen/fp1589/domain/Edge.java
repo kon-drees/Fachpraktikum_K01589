@@ -1,3 +1,5 @@
+package de.nrw.hagen.fp1589.domain;
+
 public class Edge {
 
     private Node from;
