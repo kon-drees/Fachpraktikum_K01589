@@ -1,16 +1,25 @@
 package de.nrw.hagen.fp1589.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class InformationNode {
 
-    private Entity subject;
-    private Predicate predicate;
-    private Entity object;
+    private List<Triple> triples = new ArrayList<>();
+
     //Nur SchemaNodes erlaubt. Art der Verknuepfung ergibt sich aus SchemaNode.
     private List<SchemaNode> nodes;
     private int argStrenght = 1;
 
+    private String claimText;
+
+    public String getClaimText() {
+        return this.claimText;
+    }
+
+    public void setClaimText(String claimText) {
+        this.claimText = claimText;
+    }
 
     public int getArgStrenght() {
         return argStrenght;
@@ -21,36 +30,26 @@ public class InformationNode {
     }
 
 
-     // Metadata
 
 
-    public InformationNode(Entity subject, Predicate predicate, Entity object) {
-        this.subject = subject;
-        this.predicate = predicate;
-        this.object = object;
+    public InformationNode(String subject, String predicate, String object) {
+        this.triples.add(new Triple(subject, predicate, object));
     }
 
-    public Entity getSubject() {
-        return subject;
+    public InformationNode() {
+
     }
 
-    public void setSubject(Entity subject) {
-        this.subject = subject;
+    public void addTriple(Triple triple) {
+        this.triples.add(triple);
     }
 
-    public Predicate getPredicate() {
-        return predicate;
+    public Triple getRiple(int index) {
+        return this.triples.get(index);
     }
 
-    public void setPredicate(Predicate predicate) {
-        this.predicate = predicate;
+    public int getTripleSize() {
+        return this.triples.size();
     }
 
-    public Entity getObject() {
-        return object;
-    }
-
-    public void setObject(Entity object) {
-        this.object = object;
-    }
 }

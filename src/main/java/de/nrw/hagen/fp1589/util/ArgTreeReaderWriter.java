@@ -2,12 +2,17 @@ package de.nrw.hagen.fp1589.util;
 
 import de.nrw.hagen.fp1589.domain.ArgTree;
 
+import de.nrw.hagen.fp1589.domain.InformationNode;
+import de.nrw.hagen.fp1589.domain.RuleApplicationNode;
+import de.nrw.hagen.fp1589.domain.Triple;
 import org.apache.jena.rdf.model.*;
 import org.apache.jena.util.FileManager;
 
 import java.io.FileReader;
 import java.io.InputStream;
-
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 
 public class ArgTreeReaderWriter {
@@ -23,10 +28,20 @@ public class ArgTreeReaderWriter {
         try {
 
 
-            FileReader fr = new FileReader("src/main/resources/" + fileLocation);
+            final FileReader fr = new FileReader("src/main/resources/" + fileLocation);
+
+            String lastSubject = "";
+            String type="";
+
+            final HashMap<String, InformationNode> collectediNodes = new HashMap<>();
+            final HashMap<String, Triple> collectedTriples = new HashMap<>();
+            final HashMap<String, RuleApplicationNode> collectedRSA = new HashMap<>();
+            final HashMap<String, String> jenaTriples = new HashMap();
 
 
-            Model model = ModelFactory.createDefaultModel();
+
+
+            final Model model = ModelFactory.createDefaultModel();
             try {
                 model.read(fr, null, "NTRIPLES");
             }
@@ -45,8 +60,31 @@ public class ArgTreeReaderWriter {
                 Property  predicate = stmt.getPredicate();   // get the predicate
                 RDFNode   object    = stmt.getObject();      // get the object
 
+                if ("".equals(lastSubject)) {
+                    lastSubject = subject.toString();
+                }
+                if (!lastSubject.equals(subject.toString())) {
+                    switch (type) {
+                        case "Statement" : collectedTriples.put(lastSubject, new Triple(jenaTriples.get("subject") , jenaTriples.get("predicate") , jenaTriples.get("object")));
+
+
+                    }
+
+
+
+                    lastSubject = subject.toString();
+                    System.out.println("naechster Datensatz");
+                    System.out.println(type);
+                    jenaTriples.clear();
+                }
+                if (predicate.getLocalName().equals("type")) {
+                    type = object.asResource().getLocalName();
+                }
+                jenaTriples.put(predicate.getLocalName(), object.toString());
+
+
                 System.out.print(subject.toString());
-                System.out.print(" " + predicate.toString() + " ");
+                System.out.print(" " + predicate.getLocalName() + " ");
                 if (object instanceof Resource) {
                     System.out.print(object.toString());
                 } else {
