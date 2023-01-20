@@ -6,7 +6,7 @@ import org.apache.jena.vocabulary.VCARD;
 import java.io.InputStream;
 
 public class JenaTest {
-    static final String inputFileName  = "C:\\Users\\julia\\OneDrive\\Dokumente\\Fachpraktikum\\PE3_PrototypischeSoftwareentwicklung\\Meilenstein_2\\Fachpraktikum_K01589\\ArgSchlafstörungen_arg.n3";
+    static final String inputFileName  = "C:\\Apps\\GitRepos\\Fachpraktikum_K01589\\ArgSchlafstoerungen_arg.n3";
     static String personURI    = "http://somewhere/JohnSmith";
     static String fullName     = "John Smith";
 
@@ -81,7 +81,7 @@ public class JenaTest {
 
         // write it to standard out
         model.write(System.out, "N3");
-        RDFWriter.source(model).set(RIOT.symTurtleDirectiveStyle, "N3")
+        org.apache.jena.riot.RDFWriter.source(model).set(RIOT.symTurtleDirectiveStyle, "N3")
                 .lang(Lang.TTL)
                 .output(System.out);
 
