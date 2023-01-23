@@ -1,7 +1,8 @@
 package de.nrw.hagen.fp1589.domain;
+import java.util.ArrayList;
 import java.util.List;
 public class RuleApplicationNode extends SchemaNode{
-    private List<Node> premiseNodes;
+    private List<Node> premiseNodes = new ArrayList<>();
 
     private Node conclusionNode;
 
@@ -23,4 +24,9 @@ public class RuleApplicationNode extends SchemaNode{
     public void setConclusionNode(Node conclusionNode) {
         this.conclusionNode = conclusionNode;
     }
+
+    public void addPremiseNode(Node node) {
+        this.premiseNodes.add(node);
+    }
+
 }
