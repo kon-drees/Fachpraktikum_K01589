@@ -4,7 +4,7 @@ _:B77705cd1X2DafceX2D4ff5X2D90f8X2Dc32dd35c1db7 <http://www.w3.org/1999/02/22-rd
 _:B77705cd1X2DafceX2D4ff5X2D90f8X2Dc32dd35c1db7 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement> .
 _:Bd145ba45X2D9101X2D4c1aX2Db0e8X2D24a6b44256b1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> <Durchschlafstörungen> .
 _:Bd145ba45X2D9101X2D4c1aX2Db0e8X2D24a6b44256b1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate> <verantworlich> .
-_:Bd145ba45X2D9101X2D4c1aX2Db0e8X2D24a6b44256b1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <DrogenundAlkohol> .
+_:Bd145ba45X2D9101X2D4c1aX2Db0e8X2D24a6b44256b1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <"Drogen und Alkohol"> .
 _:Bd145ba45X2D9101X2D4c1aX2Db0e8X2D24a6b44256b1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement> .
 <RuleApplicationNodeImpl0> <http://www.arg.dundee.ac.uk/aif#Premise> <Arg4> .
 <RuleApplicationNodeImpl0> <http://www.arg.dundee.ac.uk/aif#Premise> <Arg3> .

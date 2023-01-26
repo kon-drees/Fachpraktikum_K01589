@@ -34,7 +34,7 @@
         </dependency>
 
 
-        <!--
+<!--
        <dependency>
             <groupId>org.apache.jena</groupId>
             <artifactId>jena-core</artifactId>
@@ -42,9 +42,9 @@
         </dependency>
         <dependency>
             <groupId>org.apache.jena</groupId>
-            <artifactId>jena-rdfconnection</artifactId>
+            <artifactId>jena-</artifactId>
         </dependency>
-        -->
+-->
     </dependencies>
 
 </project>
