@@ -29,4 +29,8 @@ public class RuleApplicationNode extends SchemaNode{
         this.premiseNodes.add(node);
     }
 
+    public void clearPremiseNodes() {
+        this.premiseNodes.clear();;
+    }
+
 }

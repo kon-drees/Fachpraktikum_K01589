@@ -10,7 +10,7 @@ public class EmptyNode implements Node{
 
     @Override
     public void setLabel(String label) {
-
+        this.label = label;
     }
 
     public EmptyNode(String label){

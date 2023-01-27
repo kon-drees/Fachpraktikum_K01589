@@ -64,12 +64,16 @@ public class InformationNode implements Node {
         this.conclusionOf.add(raNode);
     }
 
-    public Triple getRiple(int index) {
+    public Triple getTriple(int index) {
         return this.triples.get(index);
     }
 
     public int getTripleSize() {
         return this.triples.size();
+    }
+
+    public SchemaNode getPremiseOf(int index) {
+        return this.premiseOf.get(index);
     }
 
     public String getSource() {
