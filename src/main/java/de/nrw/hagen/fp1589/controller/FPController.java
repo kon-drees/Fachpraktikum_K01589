@@ -1,4 +1,4 @@
-package de.nrw.hagen.fp1589;
+package de.nrw.hagen.fp1589.controller;
 
 public class FPController {
     public static void main(String[] args) {
