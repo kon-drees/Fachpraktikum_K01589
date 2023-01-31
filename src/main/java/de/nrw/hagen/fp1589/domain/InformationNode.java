@@ -1,6 +1,7 @@
 package de.nrw.hagen.fp1589.domain;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class InformationNode implements Node {
@@ -90,5 +91,16 @@ public class InformationNode implements Node {
 
     public void setLabel(String label) {
         this.label = label;
+    }
+
+
+    //public Iterator<RuleApplicationNode> getPremiseOfNodes() {
+        //return this.premiseOf.iterator();
+    //}
+
+
+    //Normalerweise nur conclusion eines RA-Nodes, oder auch mehrere moeglich?
+    public Iterator<RuleApplicationNode> getConclusionOfNodes() {
+        return this.conclusionOf.iterator();
     }
 }

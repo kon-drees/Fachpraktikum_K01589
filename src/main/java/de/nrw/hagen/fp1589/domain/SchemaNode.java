@@ -1,14 +1,13 @@
 package de.nrw.hagen.fp1589.domain;
 
 public class SchemaNode implements Node {
-    private InformationNode triple;
+
     private String claim;
 
     private String label;
 
-    public SchemaNode(String label, InformationNode triple, String claim) {
+    public SchemaNode(String label, String claim) {
         this.setLabel(label);
-        this.triple = triple;
         this.claim = claim;
     }
 
@@ -16,13 +15,6 @@ public class SchemaNode implements Node {
 
     }
 
-    public InformationNode getTriple() {
-        return triple;
-    }
-
-    public void setTriple(InformationNode triple) {
-        this.triple = triple;
-    }
 
     public String getClaim() {
         return claim;

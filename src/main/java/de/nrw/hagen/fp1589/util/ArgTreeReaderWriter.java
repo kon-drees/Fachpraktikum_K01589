@@ -67,16 +67,20 @@ public class ArgTreeReaderWriter {
                             inode.setLabel(lastSubject);
                             inode.setArgStrength(Long.parseLong(jenaTriples.get("argStrength")));
                             inode.setSource(jenaTriples.get("source"));
+                            inode.setClaimText(jenaTriples.get("claimText"));
                             collectediNodes.put(lastSubject, inode);
                         }
                         case "RA-node" -> {
                             RuleApplicationNode raNode = new RuleApplicationNode();
                             raNode.setLabel(lastSubject);
                             if (jenaTriples.containsKey("Premise")) {
+                                System.out.println("-----");
                                 raNode.addPremiseNode(new EmptyNode(jenaTriples.get("Premise")));
+                                System.out.println(jenaTriples.get("Premise"));
                                 int j = 1;
                                 while (jenaTriples.containsKey("Premise" + j)) {
                                     raNode.addPremiseNode(new EmptyNode(jenaTriples.get("Premise" + j)));
+                                    System.out.println(jenaTriples.get("Premise" + j));
                                     j++;
                                 }
                             }
@@ -102,8 +106,9 @@ public class ArgTreeReaderWriter {
                     if (jenaTriples.containsKey(predicate.getLocalName())) {
                         i++;
                         jenaTriples.put(predicate.getLocalName() + i, object.toString());
+                    } else {
+                        jenaTriples.put(predicate.getLocalName(), object.toString());
                     }
-                    jenaTriples.put(predicate.getLocalName(), object.toString());
                 }
 
                 //System.out.print(subject.toString());
@@ -127,6 +132,7 @@ public class ArgTreeReaderWriter {
                     inode.setLabel(lastSubject);
                     inode.setArgStrength(Long.parseLong(jenaTriples.get("argStrength")));
                     inode.setSource(jenaTriples.get("source"));
+                    inode.setClaimText(jenaTriples.get("claimText"));
                     collectediNodes.put(lastSubject, inode);
                 }
                 case "RA-Node" -> {
@@ -184,6 +190,7 @@ public class ArgTreeReaderWriter {
             if (raNode.getConclusionNode() != null) {
                 InformationNode iNode = iNodes.get(raNode.getConclusionNode().getLabel());
                 iNode.addConclusionOf(raNode);
+                tree.addINode(iNode);
                 raNode.setConclusionNode(iNode);
             }
             if (raNode.getPremiseNodes() != null) {
@@ -194,9 +201,10 @@ public class ArgTreeReaderWriter {
                 for (String nodeid : zwischen) {
                     InformationNode iNode = iNodes.get(nodeid);
                     iNode.addPremiseOf(raNode);
-                    tree.addINode(iNode);
+
                     raNode.addPremiseNode(iNode);
                 }
+                zwischen.clear();
             }
         }
         return tree;

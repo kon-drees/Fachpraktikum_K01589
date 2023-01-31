@@ -20,7 +20,7 @@ public class ArgTree {
         return this.inodes.size();
     }
 
-    public Iterator<InformationNode> getEnumeration() {
+    public Iterator<InformationNode> getInformationNodes() {
         return this.inodes.iterator();
     }
 

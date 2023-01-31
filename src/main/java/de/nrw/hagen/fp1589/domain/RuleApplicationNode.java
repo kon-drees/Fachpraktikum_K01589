@@ -1,10 +1,17 @@
 package de.nrw.hagen.fp1589.domain;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.ArrayList;
 import java.util.List;
 public class RuleApplicationNode extends SchemaNode{
     private List<Node> premiseNodes = new ArrayList<>();
 
     private Node conclusionNode;
+
+    public int getSize() {
+        return this.premiseNodes.size();
+    }
+
 
     //dirty, aber schnell :-)
     public List<Node> getPremiseNodes() {
@@ -17,6 +24,7 @@ public class RuleApplicationNode extends SchemaNode{
         this.premiseNodes = premiseNodes;
     }
 
+    @JsonIgnore
     public Node getConclusionNode() {
         return conclusionNode;
     }
