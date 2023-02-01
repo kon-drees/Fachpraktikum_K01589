@@ -8,12 +8,22 @@ public class RuleApplicationNode extends SchemaNode{
 
     private Node conclusionNode;
 
+    private PreferenceApplicationNode preferredOf;
+
+    private PreferenceApplicationNode dispreferredOf;
+
+    //Hier nur CA-Nodes moeglich
+    private ConflictApplicationNode conflictedOf;
+
+    //hier CA-Node moeglich
+    private ConflictApplicationNode conflictingOf;
+
     public int getSize() {
         return this.premiseNodes.size();
     }
 
 
-    //dirty, aber schnell :-)
+
     public List<Node> getPremiseNodes() {
         return this.premiseNodes;
     }
@@ -41,4 +51,37 @@ public class RuleApplicationNode extends SchemaNode{
         this.premiseNodes.clear();;
     }
 
+    //Wenn der RA Node preferred ist, braucht der Baum nicht in das dispreferred Element laufen.
+    @JsonIgnore
+    public PreferenceApplicationNode getPreferredOf() {
+        return this.preferredOf;
+    }
+
+    public void setPreferredOf(PreferenceApplicationNode preferredOf) {
+        this.preferredOf = preferredOf;
+    }
+
+    public PreferenceApplicationNode getDispreferredOf() {
+        return this.dispreferredOf;
+    }
+
+    public void setDispreferredOf(PreferenceApplicationNode dispreferredOf) {
+        this.dispreferredOf = dispreferredOf;
+    }
+
+    public ConflictApplicationNode getConflictedOf() {
+        return this.conflictedOf;
+    }
+
+    public void setConflictedOf(ConflictApplicationNode conflictedOf) {
+        this.conflictedOf = conflictedOf;
+    }
+
+    public ConflictApplicationNode getConflictingOf() {
+        return conflictingOf;
+    }
+
+    public void setConflictingOf(ConflictApplicationNode conflictingOf) {
+        this.conflictingOf = conflictingOf;
+    }
 }

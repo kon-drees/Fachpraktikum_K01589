@@ -22,7 +22,9 @@ public class ArgTreeReaderWriter {
         // create an empty model
         final HashMap<String, InformationNode> collectediNodes = new HashMap<>();
         final HashMap<String, Triple> collectedTriples = new HashMap<>();
-        final HashMap<String, RuleApplicationNode> collectedRSA = new HashMap<>();
+        final HashMap<String, RuleApplicationNode> collectedRA = new HashMap<>();
+        final HashMap<String, PreferenceApplicationNode> collectedPA = new HashMap<>();
+        final HashMap<String, ConflictApplicationNode> collectedCA = new HashMap<>();
 
         try {
 
@@ -87,7 +89,31 @@ public class ArgTreeReaderWriter {
                             if (jenaTriples.containsKey("Conclusion")) {
                                 raNode.setConclusionNode(new EmptyNode(jenaTriples.get("Conclusion")));
                             }
-                            collectedRSA.put(lastSubject, raNode);
+                            collectedRA.put(lastSubject, raNode);
+                        }
+                        case "PA-node" -> {
+                            PreferenceApplicationNode paNode = new PreferenceApplicationNode();
+                            paNode.setLabel(lastSubject);
+                            if (jenaTriples.containsKey("Preferred")) {
+                                System.out.println("-----");
+                                paNode.setPreferredNode(new EmptyNode(jenaTriples.get("Preferred")));
+                            }
+                            if (jenaTriples.containsKey("Dispreferred")) {
+                                paNode.setPreferredNode(new EmptyNode(jenaTriples.get("Dispreferred")));
+                            }
+                            collectedPA.put(lastSubject, paNode);
+                        }
+                        case "CA-node" -> {
+                            ConflictApplicationNode caNode = new ConflictApplicationNode();
+                            caNode.setLabel(lastSubject);
+                            if (jenaTriples.containsKey("Conflicted")) {
+                                System.out.println("-----");
+                                caNode.setConflictedNode(new EmptyNode(jenaTriples.get("Conflicted")));
+                            }
+                            if (jenaTriples.containsKey("Conflicting")) {
+                                caNode.setConflictingNode(new EmptyNode(jenaTriples.get("Conflicting")));
+                            }
+                            collectedCA.put(lastSubject, caNode);
                         }
                     }
 
@@ -149,7 +175,31 @@ public class ArgTreeReaderWriter {
                     if (jenaTriples.containsKey("Conclusion")) {
                         raNode.setConclusionNode(new EmptyNode(jenaTriples.get("Conclusion")));
                     }
-                    collectedRSA.put(lastSubject, raNode);
+                    collectedRA.put(lastSubject, raNode);
+                }
+                case "PA-node" -> {
+                    PreferenceApplicationNode paNode = new PreferenceApplicationNode();
+                    paNode.setLabel(lastSubject);
+                    if (jenaTriples.containsKey("Preferred")) {
+                        System.out.println("-----");
+                        paNode.setPreferredNode(new EmptyNode(jenaTriples.get("Preferred")));
+                    }
+                    if (jenaTriples.containsKey("Dispreferred")) {
+                        paNode.setPreferredNode(new EmptyNode(jenaTriples.get("Dispreferred")));
+                    }
+                    collectedPA.put(lastSubject, paNode);
+                }
+                case "CA-node" -> {
+                    ConflictApplicationNode caNode = new ConflictApplicationNode();
+                    caNode.setLabel(lastSubject);
+                    if (jenaTriples.containsKey("Conflicted")) {
+                        System.out.println("-----");
+                        caNode.setConflictedNode(new EmptyNode(jenaTriples.get("Conflicted")));
+                    }
+                    if (jenaTriples.containsKey("Conflicting")) {
+                        caNode.setConflictingNode(new EmptyNode(jenaTriples.get("Conflicting")));
+                    }
+                    collectedCA.put(lastSubject, caNode);
                 }
             }
             fr.close();
@@ -162,10 +212,10 @@ public class ArgTreeReaderWriter {
 
         System.out.println("inodes:" + collectediNodes.size());
         System.out.println("statements:" + collectedTriples.size());
-        System.out.println("ranodes:" + collectedRSA.size());
+        System.out.println("ranodes:" + collectedRA.size());
 
 
-        return createTree(collectediNodes,collectedRSA, collectedTriples);
+        return createTree(collectediNodes,collectedRA, collectedTriples, collectedPA, collectedCA);
 
     }
 
@@ -174,8 +224,8 @@ public class ArgTreeReaderWriter {
         //RDFDataMgr.write(System.out, this.importedModel, RDFFormat.NT) ;
     }
 
-    private static ArgTree createTree(Map<String, InformationNode> iNodes, Map<String, RuleApplicationNode> raNodes , Map<String, Triple> triples) {
-        ArgTree tree = new ArgTree();
+    private static ArgTree createTree(Map<String, InformationNode> iNodes, Map<String, RuleApplicationNode> raNodes , Map<String, Triple> triples , Map<String, PreferenceApplicationNode> paNodes, Map<String, ConflictApplicationNode> caNodes) {
+        final ArgTree tree = new ArgTree();
         final List<String> zwischen = new ArrayList<>();
         for (String id : iNodes.keySet()) {
             InformationNode iNode = iNodes.get(id);
@@ -205,6 +255,42 @@ public class ArgTreeReaderWriter {
                     raNode.addPremiseNode(iNode);
                 }
                 zwischen.clear();
+            }
+        }
+
+        for (String id: paNodes.keySet()) {
+            PreferenceApplicationNode paNode = paNodes.get(id);
+            if (paNode.getPreferredNode() != null) {  // Hier werden nur Referenzen auf RA-Nodes beruecksichtigt. !!!
+                RuleApplicationNode raNode = raNodes.get(paNode.getPreferredNode().getLabel());
+                raNode.setPreferredOf(paNode);
+                paNode.setPreferredNode(raNode);
+            }
+            if (paNode.getDispreferredNode() != null) {
+                RuleApplicationNode raNode = raNodes.get(paNode.getDispreferredNode().getLabel());
+                raNode.setDispreferredOf(paNode);
+                paNode.setDisPreferredNode(raNode);
+            }
+        }
+
+        for (String id: caNodes.keySet()) {
+            ConflictApplicationNode caNode = caNodes.get(id);
+            if (caNode.getConflictedNode() != null) {  // Hier werden nur Referenzen auf RA-Nodes beruecksichtigt. !!!
+                RuleApplicationNode raNode = raNodes.get(caNode.getConflictedNode().getLabel());
+                raNode.setConflictedOf(caNode);
+                caNode.setConflictedNode(raNode);
+            }
+            if (caNode.getConflictingNode() != null) { //Hier I-Node und RA-Node moeglich
+                Node confNode = caNode.getConflictingNode();
+                if (confNode.getLabel().startsWith("Rule")) {
+                    RuleApplicationNode raNode = raNodes.get(confNode.getLabel());
+                    raNode.setConflictingOf(caNode);
+                    caNode.setConflictingNode(raNode);
+                }
+                else {  //ansonsten nur I-Node moeglich
+                    InformationNode iNode = iNodes.get(confNode.getLabel());
+                    iNode.setConflictingOf(caNode);
+                    caNode.setConflictingNode(iNode);
+                }
             }
         }
         return tree;

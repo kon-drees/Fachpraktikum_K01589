@@ -12,6 +12,8 @@ public class InformationNode implements Node {
 
     private List<RuleApplicationNode> conclusionOf = new ArrayList<>();
 
+    private ConflictApplicationNode conflictingOf;
+
     //Nur SchemaNodes erlaubt. Art der Verknuepfung ergibt sich aus SchemaNode.
     private List<SchemaNode> nodes;
     private long argStrength = 1;
@@ -102,5 +104,13 @@ public class InformationNode implements Node {
     //Normalerweise nur conclusion eines RA-Nodes, oder auch mehrere moeglich?
     public Iterator<RuleApplicationNode> getConclusionOfNodes() {
         return this.conclusionOf.iterator();
+    }
+
+    public ConflictApplicationNode getConflictingOf() {
+        return this.conflictingOf;
+    }
+
+    public void setConflictingOf(ConflictApplicationNode conflictingOf) {
+        this.conflictingOf = conflictingOf;
     }
 }
