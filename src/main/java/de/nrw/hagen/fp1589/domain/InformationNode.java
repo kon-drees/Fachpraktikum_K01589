@@ -41,8 +41,6 @@ public class InformationNode implements Node {
     }
 
 
-
-
     public InformationNode(String subject, String predicate, String object) {
         this.triples.add(new Triple(subject, predicate, object));
     }
@@ -78,6 +76,35 @@ public class InformationNode implements Node {
     public SchemaNode getPremiseOf(int index) {
         return this.premiseOf.get(index);
     }
+
+    public List<RuleApplicationNode>   getPremiseOf() {
+        return this.premiseOf;
+    }
+
+
+
+    public List<InformationNode> getPremisesOfNodeList() {
+        List<InformationNode> premiseList = new ArrayList<>();
+        for (RuleApplicationNode raNode : premiseOf){
+            List<Node> premiseOfList = raNode.getPremiseNodes();
+            for (Node premise:premiseOfList
+                 ) {
+                premiseList.add((InformationNode) premise);
+
+            }
+
+        }
+        return premiseList;
+    }
+
+    public List<InformationNode> getConclusionsOfNodeList() {
+        List<InformationNode> conclusionList = new ArrayList<>();
+        for (RuleApplicationNode raNode : conclusionOf){
+            conclusionList.add((InformationNode) raNode.getConclusionNode());
+        }
+        return conclusionList;
+    }
+
 
     public String getSource() {
         return source;
