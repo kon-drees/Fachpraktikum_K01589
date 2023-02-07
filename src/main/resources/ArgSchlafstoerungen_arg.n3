@@ -97,6 +97,9 @@ _:Be0b55eaaX2D9a74X2D47f8X2Db9c4X2D620a3022c4fc <http://www.w3.org/1999/02/22-rd
 <RuleApplicationNodeImpl1> <http://www.arg.dundee.ac.uk/aif#Premise> <Arg1> .
 <RuleApplicationNodeImpl1> <http://www.arg.dundee.ac.uk/aif#Conclusion> <Arg6> .
 <RuleApplicationNodeImpl1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.arg.dundee.ac.uk/aif#RA-node> .
+<PreferenceApplicationNodeImpl1> <http://www.arg.dundee.ac.uk/aif#Preferred> <RuleApplicationNodeImpl1> .
+<PreferenceApplicationNodeImpl1> <http://www.arg.dundee.ac.uk/aif#Dispreferred> <RuleApplicationNodeImpl0> .
+<PreferenceApplicationNodeImpl1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.arg.dundee.ac.uk/aif#PA-node> .
 <Arg2> <http://www.example.org/aif#argStrength> "0"^^<http://www.w3.org/2001/XMLSchema#long> .
 <Arg2> <http://www.example.org/aif#source> _:B09a47f1aX2D78c7X2D48aeX2D862aX2D5ffd1540d71b .
 <Arg2> <http://www.arg.dundee.ac.uk/aif#claimText> "Stress <auslösen> Durchschlafstörungen" .

@@ -57,7 +57,7 @@ public class ArgTreeEvaluator {
     }
 
 
-    public List<InformationNode> getConclusionForUser(ArrayList<InformationNode> argumentList) {
+    public List<InformationNode> getConclusionForUser(List<? super InformationNode> argumentList) {
 
         List<InformationNode> conclusionList = new ArrayList<>();
         conclusionList = evaluateArguments(argumentList);
@@ -68,7 +68,7 @@ public class ArgTreeEvaluator {
 
     // input of the users chosen and relevant arguments
     // returns the conclusion of the arguments
-    private List<InformationNode> evaluateArguments(ArrayList<InformationNode> argumentList) {
+    private List<InformationNode> evaluateArguments(List<? super InformationNode> argumentList) {
         List<InformationNode> conclusionList = new ArrayList<>();
         if (argumentationList == null) {
             throw new RuntimeException("No Arguments");
@@ -77,7 +77,8 @@ public class ArgTreeEvaluator {
         if (argumentList.isEmpty())
             return conclusionList;
 
-        for (InformationNode inputArg : argumentList) {
+        for (Object inputObj : argumentList) {
+            InformationNode inputArg = (InformationNode) inputObj;
             List<InformationNode> premiseOfList = inputArg.getPremisesOfNodeList();
             if (premiseOfList.isEmpty())
                 return conclusionList;

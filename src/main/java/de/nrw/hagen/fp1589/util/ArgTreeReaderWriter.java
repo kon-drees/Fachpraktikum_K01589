@@ -45,12 +45,11 @@ public class ArgTreeReaderWriter {
                 System.out.println(" Fehler: " + ex.getMessage());
             }
 
-            System.out.println("geklappt");
 
             StmtIterator iter = model.listStatements();
             int i = 0;
 
-// print out the predicate, subject and object of each statement
+
             while (iter.hasNext()) {
                 Statement stmt      = iter.nextStatement();  // get next statement
                 Resource subject   = stmt.getSubject();     // get the subject
@@ -67,7 +66,9 @@ public class ArgTreeReaderWriter {
                         case "I-node" -> {
                             InformationNode inode = new InformationNode();
                             inode.setLabel(lastSubject);
-                            inode.setArgStrength(Long.parseLong(jenaTriples.get("argStrength")));
+                            if (jenaTriples.get("argStrength") != null) {
+                                inode.setArgStrength(Long.parseLong(jenaTriples.get("argStrength")));
+                            }
                             inode.setSource(jenaTriples.get("source"));
                             inode.setClaimText(jenaTriples.get("claimText"));
                             collectediNodes.put(lastSubject, inode);
@@ -76,13 +77,10 @@ public class ArgTreeReaderWriter {
                             RuleApplicationNode raNode = new RuleApplicationNode();
                             raNode.setLabel(lastSubject);
                             if (jenaTriples.containsKey("Premise")) {
-                                System.out.println("-----");
                                 raNode.addPremiseNode(new EmptyNode(jenaTriples.get("Premise")));
-                                System.out.println(jenaTriples.get("Premise"));
                                 int j = 1;
                                 while (jenaTriples.containsKey("Premise" + j)) {
                                     raNode.addPremiseNode(new EmptyNode(jenaTriples.get("Premise" + j)));
-                                    System.out.println(jenaTriples.get("Premise" + j));
                                     j++;
                                 }
                             }
@@ -95,11 +93,10 @@ public class ArgTreeReaderWriter {
                             PreferenceApplicationNode paNode = new PreferenceApplicationNode();
                             paNode.setLabel(lastSubject);
                             if (jenaTriples.containsKey("Preferred")) {
-                                System.out.println("-----");
                                 paNode.setPreferredNode(new EmptyNode(jenaTriples.get("Preferred")));
                             }
                             if (jenaTriples.containsKey("Dispreferred")) {
-                                paNode.setPreferredNode(new EmptyNode(jenaTriples.get("Dispreferred")));
+                                paNode.setDisPreferredNode(new EmptyNode(jenaTriples.get("Dispreferred")));
                             }
                             collectedPA.put(lastSubject, paNode);
                         }
@@ -107,7 +104,6 @@ public class ArgTreeReaderWriter {
                             ConflictApplicationNode caNode = new ConflictApplicationNode();
                             caNode.setLabel(lastSubject);
                             if (jenaTriples.containsKey("Conflicted")) {
-                                System.out.println("-----");
                                 caNode.setConflictedNode(new EmptyNode(jenaTriples.get("Conflicted")));
                             }
                             if (jenaTriples.containsKey("Conflicting")) {
@@ -116,10 +112,7 @@ public class ArgTreeReaderWriter {
                             collectedCA.put(lastSubject, caNode);
                         }
                     }
-
                     lastSubject = subject.toString();
-                    //System.out.println("naechster Datensatz");
-                    //System.out.println(type);
                     jenaTriples.clear();
                     i = 0;
                 }
@@ -181,11 +174,10 @@ public class ArgTreeReaderWriter {
                     PreferenceApplicationNode paNode = new PreferenceApplicationNode();
                     paNode.setLabel(lastSubject);
                     if (jenaTriples.containsKey("Preferred")) {
-                        System.out.println("-----");
                         paNode.setPreferredNode(new EmptyNode(jenaTriples.get("Preferred")));
                     }
                     if (jenaTriples.containsKey("Dispreferred")) {
-                        paNode.setPreferredNode(new EmptyNode(jenaTriples.get("Dispreferred")));
+                        paNode.setDisPreferredNode(new EmptyNode(jenaTriples.get("Dispreferred")));
                     }
                     collectedPA.put(lastSubject, paNode);
                 }
@@ -193,7 +185,6 @@ public class ArgTreeReaderWriter {
                     ConflictApplicationNode caNode = new ConflictApplicationNode();
                     caNode.setLabel(lastSubject);
                     if (jenaTriples.containsKey("Conflicted")) {
-                        System.out.println("-----");
                         caNode.setConflictedNode(new EmptyNode(jenaTriples.get("Conflicted")));
                     }
                     if (jenaTriples.containsKey("Conflicting")) {

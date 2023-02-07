@@ -19,7 +19,7 @@ public class PreferenceApplicationNode extends SchemaNode{
         return this.preferredNode;
     }
 
-    public void setPreferredNode(Node preferredNodes) {
+    public void setPreferredNode(Node preferredNode) {
         this.preferredNode = preferredNode;
     }
 
@@ -29,7 +29,7 @@ public class PreferenceApplicationNode extends SchemaNode{
         return this.dispreferredNode;
     }
 
-    public void setDisPreferredNode(Node dispreferredNodes) {
+    public void setDisPreferredNode(Node dispreferredNode) {
         this.dispreferredNode = dispreferredNode;
     }
 }

@@ -32,7 +32,7 @@ public class ArgController {
             System.out.println("ja oder nein?");
             Scanner in = new Scanner(System.in);
             String s = in.nextLine();
-            if (s.toLowerCase() == "ja")
+            if ("ja".equals(s.toLowerCase()))
                 acceptedArguments.add(node);
 
         }

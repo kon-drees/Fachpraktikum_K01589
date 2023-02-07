@@ -87,12 +87,9 @@ public class InformationNode implements Node {
         List<InformationNode> premiseList = new ArrayList<>();
         for (RuleApplicationNode raNode : premiseOf){
             List<Node> premiseOfList = raNode.getPremiseNodes();
-            for (Node premise:premiseOfList
-                 ) {
+            for (Node premise:premiseOfList) {
                 premiseList.add((InformationNode) premise);
-
             }
-
         }
         return premiseList;
     }
