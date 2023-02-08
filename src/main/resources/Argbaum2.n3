@@ -3,23 +3,23 @@
 <Arg12> <http://www.arg.dundee.ac.uk/aif#claimText> "Konsum von Alkohol <wirkt sich negativ aus> Schlafverhalten" .
 <Arg12> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.arg.dundee.ac.uk/aif#I-node> .
 _:B5d840290X2D8ac8X2D44ccX2Db72fX2D2ba39c52fc09 <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> <Schlafverhalten> .
-_:B5d840290X2D8ac8X2D44ccX2Db72fX2D2ba39c52fc09 <http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate> <wirkt sich negativ aus> .
-_:B5d840290X2D8ac8X2D44ccX2Db72fX2D2ba39c52fc09 <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <Konsum von Alkohol> .
+_:B5d840290X2D8ac8X2D44ccX2Db72fX2D2ba39c52fc09 <http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate> <wirkt_sich_negativ_aus> .
+_:B5d840290X2D8ac8X2D44ccX2Db72fX2D2ba39c52fc09 <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <Konsum_von_Alkohol> .
 _:B5d840290X2D8ac8X2D44ccX2Db72fX2D2ba39c52fc09 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement> .
 <Arg0> <http://www.example.org/aif#argStrength> "0"^^<http://www.w3.org/2001/XMLSchema#long> .
 <Arg0> <http://www.example.org/aif#source> _:B963d65dfX2D3f15X2D46deX2Dbf83X2D11fbf577656c .
 <Arg0> <http://www.arg.dundee.ac.uk/aif#claimText> "Patient <leidet an> Durchschlafstörungen" .
 <Arg0> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.arg.dundee.ac.uk/aif#I-node> .
 _:B963d65dfX2D3f15X2D46deX2Dbf83X2D11fbf577656c <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> <Durchschlafstörungen> .
-_:B963d65dfX2D3f15X2D46deX2Dbf83X2D11fbf577656c <http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate> <leidet an> .
+_:B963d65dfX2D3f15X2D46deX2Dbf83X2D11fbf577656c <http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate> <leidet_an> .
 _:B963d65dfX2D3f15X2D46deX2Dbf83X2D11fbf577656c <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <Patient> .
 _:B963d65dfX2D3f15X2D46deX2Dbf83X2D11fbf577656c <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement> .
 <Arg4> <http://www.example.org/aif#argStrength> "0"^^<http://www.w3.org/2001/XMLSchema#long> .
 <Arg4> <http://www.example.org/aif#source> _:B44154409X2Dc30fX2D4eaaX2Dafc1X2D11dccb016473 .
 <Arg4> <http://www.arg.dundee.ac.uk/aif#claimText> "Schichtarbeiter <klagen über> schlaflose Nächte" .
 <Arg4> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.arg.dundee.ac.uk/aif#I-node> .
-_:B44154409X2Dc30fX2D4eaaX2Dafc1X2D11dccb016473 <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> <schlaflose Nächte> .
-_:B44154409X2Dc30fX2D4eaaX2Dafc1X2D11dccb016473 <http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate> <klagen über> .
+_:B44154409X2Dc30fX2D4eaaX2Dafc1X2D11dccb016473 <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> <schlaflose_Nächte> .
+_:B44154409X2Dc30fX2D4eaaX2Dafc1X2D11dccb016473 <http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate> <klagen_über> .
 _:B44154409X2Dc30fX2D4eaaX2Dafc1X2D11dccb016473 <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <Schichtarbeiter> .
 _:B44154409X2Dc30fX2D4eaaX2Dafc1X2D11dccb016473 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement> .
 <RuleApplicationNodeImpl0> <http://www.arg.dundee.ac.uk/aif#Premise> <Arg12> .
