@@ -1,4 +1,5 @@
 package de.nrw.hagen.fp1589.util.impl;
+import de.nrw.hagen.fp1589.controller.ArgController;
 import de.nrw.hagen.fp1589.domain.ArgTree;
 import de.nrw.hagen.fp1589.domain.InformationNode;
 import de.nrw.hagen.fp1589.util.ArgTreeEvaluator;
@@ -27,16 +28,17 @@ public class ArgTreeReaderWriterTest {
 
         ArgTreeEvaluator eva = new ArgTreeEvaluator(tree);
 
+        ArgController controller = new ArgController(eva);
+        controller.loadTree(tree);
+        System.out.println("ask");
+        List<InformationNode> askerg = controller.askForArguments();
+        System.out.println(" after ask" +askerg.size());
+
+
+
+
         ArrayList<InformationNode> args = new ArrayList<>();
-
-
         InformationNode start = tree.getInformationNode(0);
-
-        System.out.println(start.getConclusionOfNodes().next().getPremiseNodes().size());
-
-
-        args.add(tree.getInformationNode(0));
-        System.out.println("rufe evaluator auf");
 
         List<InformationNode> ergebnisse = eva.getConclusionForUser(start.getConclusionOfNodes().next().getPremiseNodes());
 

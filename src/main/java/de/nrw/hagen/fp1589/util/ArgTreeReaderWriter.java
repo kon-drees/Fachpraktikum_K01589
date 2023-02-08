@@ -4,6 +4,7 @@ import de.nrw.hagen.fp1589.domain.*;
 
 import org.apache.jena.rdf.model.*;
 
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,12 +12,9 @@ import java.util.List;
 import java.util.Map;
 
 
+
+
 public class ArgTreeReaderWriter {
-
-
-
-
-
 
     public static ArgTree importTree(String fileLocation) {
         // create an empty model
@@ -116,6 +114,9 @@ public class ArgTreeReaderWriter {
                     jenaTriples.clear();
                     i = 0;
                 }
+
+
+
                 if ("type".equals(predicate.getLocalName())) {
                     type = object.asResource().getLocalName();
                 }
@@ -197,6 +198,11 @@ public class ArgTreeReaderWriter {
 
         }
 
+        catch (FileNotFoundException ex) {
+            System.out.println("Datei nicht gefunden");
+            ex.printStackTrace();
+            return null;
+        }
         catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -224,8 +230,10 @@ public class ArgTreeReaderWriter {
                 Triple triple = triples.get(iNode.getSource());
                 iNode.addTriple(triple);
             }
+            tree.addINode(iNode);
         }
 
+        /*
         for (String id: raNodes.keySet()) {
             RuleApplicationNode raNode = raNodes.get(id);
             if (raNode.getConclusionNode() != null) {
@@ -262,7 +270,7 @@ public class ArgTreeReaderWriter {
                 paNode.setDisPreferredNode(raNode);
             }
         }
-
+*/
         for (String id: caNodes.keySet()) {
             ConflictApplicationNode caNode = caNodes.get(id);
             if (caNode.getConflictedNode() != null) {  // Hier werden nur Referenzen auf RA-Nodes beruecksichtigt. !!!

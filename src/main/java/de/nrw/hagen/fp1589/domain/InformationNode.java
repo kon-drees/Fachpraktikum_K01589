@@ -1,5 +1,7 @@
 package de.nrw.hagen.fp1589.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -65,6 +67,7 @@ public class InformationNode implements Node {
         this.conclusionOf.add(raNode);
     }
 
+    @JsonIgnore
     public Triple getTriple(int index) {
         return this.triples.get(index);
     }
@@ -72,6 +75,8 @@ public class InformationNode implements Node {
     public int getTripleSize() {
         return this.triples.size();
     }
+
+    @JsonIgnore
 
     public SchemaNode getPremiseOf(int index) {
         return this.premiseOf.get(index);
@@ -82,7 +87,7 @@ public class InformationNode implements Node {
     }
 
 
-
+    @JsonIgnore
     public List<InformationNode> getPremisesOfNodeList() {
         List<InformationNode> premiseList = new ArrayList<>();
         for (RuleApplicationNode raNode : premiseOf){
@@ -94,6 +99,7 @@ public class InformationNode implements Node {
         return premiseList;
     }
 
+    @JsonIgnore
     public List<InformationNode> getConclusionsOfNodeList() {
         List<InformationNode> conclusionList = new ArrayList<>();
         for (RuleApplicationNode raNode : conclusionOf){
