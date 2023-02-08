@@ -64,6 +64,7 @@ public class ArgTreeReaderWriter {
                         case "I-node" -> {
                             InformationNode inode = new InformationNode();
                             inode.setLabel(lastSubject);
+                            System.out.println("inode: " + lastSubject);
                             if (jenaTriples.get("argStrength") != null) {
                                 inode.setArgStrength(Long.parseLong(jenaTriples.get("argStrength")));
                             }
@@ -230,10 +231,9 @@ public class ArgTreeReaderWriter {
                 Triple triple = triples.get(iNode.getSource());
                 iNode.addTriple(triple);
             }
-            tree.addINode(iNode);
         }
 
-        /*
+
         for (String id: raNodes.keySet()) {
             RuleApplicationNode raNode = raNodes.get(id);
             if (raNode.getConclusionNode() != null) {
@@ -270,7 +270,7 @@ public class ArgTreeReaderWriter {
                 paNode.setDisPreferredNode(raNode);
             }
         }
-*/
+
         for (String id: caNodes.keySet()) {
             ConflictApplicationNode caNode = caNodes.get(id);
             if (caNode.getConflictedNode() != null) {  // Hier werden nur Referenzen auf RA-Nodes beruecksichtigt. !!!
