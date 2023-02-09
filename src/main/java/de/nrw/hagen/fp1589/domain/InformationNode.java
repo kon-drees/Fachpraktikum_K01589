@@ -103,7 +103,7 @@ public class InformationNode implements Node {
     public List<InformationNode> getConclusionsOfNodeList() {
         List<InformationNode> conclusionList = new ArrayList<>();
         for (RuleApplicationNode raNode : conclusionOf){
-            conclusionList.add((InformationNode) raNode.getConclusionNode());
+            conclusionList.add((InformationNode) raNode.getPremiseNodes());
         }
         return conclusionList;
     }

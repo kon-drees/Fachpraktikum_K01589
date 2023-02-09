@@ -2,6 +2,8 @@ package de.nrw.hagen.fp1589.util;
 
 import de.nrw.hagen.fp1589.domain.ArgTree;
 import de.nrw.hagen.fp1589.domain.InformationNode;
+import de.nrw.hagen.fp1589.domain.Node;
+import de.nrw.hagen.fp1589.domain.RuleApplicationNode;
 
 import java.util.*;
 
@@ -32,19 +34,46 @@ public class ArgTreeEvaluator {
     //so we iterate through all nodes and check if a node doesn't have any premisses more specifically no conclusion of a node
     private List<InformationNode> getLastNodes() {
         List<InformationNode> lastNodesList = new ArrayList<>();
-        Iterator<InformationNode> nodeIterator = argTree.getInformationNodes();
-        while (nodeIterator.hasNext()) {
-            InformationNode node = nodeIterator.next();
-            //check if premiseList is empty and doesn't contain in the already evaluated list
-            if (node.getConclusionsOfNodeList().isEmpty() && !evaluatedNodes.contains(node))
-                lastNodesList.add(node);
+        Iterator<InformationNode> rootIterator = argTree.getInformationNodes();
+        LinkedList<Node> nodeToCheckSet = new LinkedList<>();
+
+        //gets the premisses of the root Nodes
+        while (rootIterator.hasNext()) {
+            InformationNode node = rootIterator.next();
+            Iterator<RuleApplicationNode> premissesIterator = node.getConclusionOfNodes();
+            while (premissesIterator.hasNext()) {
+                List<Node> premissesNodesList = premissesIterator.next().getPremiseNodes();
+                for (Node premisses : premissesNodesList) {
+                    if (!nodeToCheckSet.contains(premisses)) {
+                        nodeToCheckSet.add(premisses);
+                    }
+                }
+
+            }
+
         }
+        // gets the premises of the nodes and checks if there are exists no  duplicates
+        while (!nodeToCheckSet.isEmpty()) {
+            InformationNode nodeToCheck = (InformationNode) nodeToCheckSet.pop();
+            Iterator<RuleApplicationNode> premissesIterator = nodeToCheck.getConclusionOfNodes();
+            if (premissesIterator != null && !lastNodesList.contains(nodeToCheck)) {
+                lastNodesList.add(nodeToCheck);
+            } else {
+                while (premissesIterator.hasNext()) {
+                    List<Node> premissesNodesList = premissesIterator.next().getPremiseNodes();
+                    for (Node premisses : premissesNodesList) {
+                        if (!nodeToCheckSet.contains(premisses) && !lastNodesList.contains(premisses)) {
+                            nodeToCheckSet.add(premisses);
+                        }
+                    }
+                    nodeToCheckSet.addAll(premissesIterator.next().getPremiseNodes());
+                }
+            }
 
-        // when no last nodes + conclusion !!!
-       // if (lastNodesList.isEmpty()) ;
-
-
+        }
         return lastNodesList;
+
+
     }
 
 
@@ -57,8 +86,7 @@ public class ArgTreeEvaluator {
     }
 
 
-    public List<InformationNode> getConclusionForUser(List<? super InformationNode> argumentList) {
-
+    public List<InformationNode> getConclusionForUser(List<InformationNode> argumentList) {
         List<InformationNode> conclusionList = new ArrayList<>();
         conclusionList = evaluateArguments(argumentList);
         return conclusionList;
@@ -68,41 +96,32 @@ public class ArgTreeEvaluator {
 
     // input of the users chosen and relevant arguments
     // returns the conclusion of the arguments
-    private List<InformationNode> evaluateArguments(List<? super InformationNode> argumentList) {
+    private List<InformationNode> evaluateArguments(List<InformationNode> argumentList) {
         List<InformationNode> conclusionList = new ArrayList<>();
         if (argumentationList == null) {
             throw new RuntimeException("No Arguments");
         }
-
         if (argumentList.isEmpty())
             return conclusionList;
 
-        for (Object inputObj : argumentList) {
+        for (Node inputObj : argumentList) {
             InformationNode inputArg = (InformationNode) inputObj;
-            List<InformationNode> premiseOfList = inputArg.getPremisesOfNodeList();
-            if (premiseOfList.isEmpty())
-                return conclusionList;
-            for (InformationNode conclusion : premiseOfList) {
-                if (!conclusionList.contains(conclusion)) {
-                    List<InformationNode> conclusionOfList = conclusion.getConclusionsOfNodeList();
-                    boolean isConclusion = argumentList.containsAll(conclusionOfList);
-                    if (isConclusion)
-                        conclusionList.add(conclusion);
-
+            List<RuleApplicationNode> ruleApplicationNodeList = inputArg.getPremiseOf();
+            for (RuleApplicationNode node :
+                    ruleApplicationNodeList) {
+                if (!node.getPremiseNodes().isEmpty() && argumentList.containsAll(node.getPremiseNodes())) {
+                    if (!conclusionList.contains(node.getConclusionNode()))
+                        conclusionList.add((InformationNode) node.getConclusionNode());
                 }
+
 
             }
 
 
         }
-
-        //Conclusion can be Empty
         return conclusionList;
 
     }
-
-
-
 
 
 }

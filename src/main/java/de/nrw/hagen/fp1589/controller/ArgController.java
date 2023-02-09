@@ -43,7 +43,7 @@ public class ArgController {
     public void showConclusion( ArrayList<InformationNode>  acceptedArguments){
         List<InformationNode> conlusions = argTreeEvaluator.getConclusionForUser(acceptedArguments);
         if (conlusions.isEmpty()){
-            System.out.println("Keine Konlusion für die Argumente möglich!");
+            System.out.println("Keine Konklusion für die Argumente möglich!");
         }
 
             else{
