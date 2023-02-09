@@ -11,7 +11,6 @@ import org.junit.Test;
 import org.junit.internal.runners.JUnit4ClassRunner;
 import org.junit.runner.RunWith;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -23,7 +22,7 @@ public class ArgTreeEvaluatorTest {
 
 
     final String argLocation1 = "Argbaum1.n3";
-    final String argLocation2 = "Argbaum5.n3";
+    final String argLocation2 = "Argbaum6.n3";
 
 
     @Test
@@ -45,6 +44,30 @@ public class ArgTreeEvaluatorTest {
 
         assertEquals(nodeOne, (nodes.get(0)));
         assertEquals(nodeTwo, (nodes.get(1)));
+
+
+    }
+
+
+    @Test
+    public void testGetLastNodesTwo() {
+
+
+        //is
+        ArgTree argTree = ArgTreeReaderWriter.importTree(argLocation2);
+        ArgTreeEvaluator argTreeEvaluator = new ArgTreeEvaluator(argTree);
+
+        //when
+        List<InformationNode> nodes = argTreeEvaluator.getNodesForUser();
+
+        //should
+        Iterator<InformationNode> rootIterator = argTree.getInformationNodes();
+        List<Node> nodesList = rootIterator.next().getConclusionOfNodes().next().getPremiseNodes();
+
+
+
+        assertEquals(nodesList.get(0), (nodes.get(0)));
+        assertEquals(nodesList.get(1), (nodes.get(1)));
 
 
     }
