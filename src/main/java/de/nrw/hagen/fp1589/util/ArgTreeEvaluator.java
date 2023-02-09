@@ -103,15 +103,21 @@ public class ArgTreeEvaluator {
         }
         if (argumentList.isEmpty())
             return conclusionList;
+        Iterator<InformationNode> rootIterator = argTree.getInformationNodes();
+        while (rootIterator.hasNext()) {
+            InformationNode node = rootIterator.next();
+
+        }
 
         for (Node inputObj : argumentList) {
             InformationNode inputArg = (InformationNode) inputObj;
             List<RuleApplicationNode> ruleApplicationNodeList = inputArg.getPremiseOf();
             for (RuleApplicationNode node :
                     ruleApplicationNodeList) {
-                if (!node.getPremiseNodes().isEmpty() && argumentList.containsAll(node.getPremiseNodes())) {
+                if (!node.getPremiseNodes().isEmpty() && argumentList.containsAll(node.getPremiseNodes()) ) {
                     if (!conclusionList.contains(node.getConclusionNode()))
                         conclusionList.add((InformationNode) node.getConclusionNode());
+
                 }
 
 

@@ -16,20 +16,25 @@ public class ArgController {
         this.argTreeEvaluator = argTreeEvaluator;
     }
 
-    public void loadTree(ArgTree argTree){
+    public void loadTree(ArgTree argTree) {
         argTreeEvaluator.setArgTree(argTree);
     }
 
+    public void StartConversation(){
+        List<InformationNode> nodes =  askForArguments();
+        showConclusion((ArrayList<InformationNode>) nodes);
+    }
+
     // j n Questions
-    public  List<InformationNode> askForArguments(){
-      List<InformationNode>  nodesToAsk = argTreeEvaluator.getNodesForUser();
-      List<InformationNode>  acceptedArguments = new ArrayList<>();
-        for (InformationNode node:nodesToAsk) {
-            for(int i = 0; i < node.getTripleSize(); i++){
-                System.out.println(node.getTriple(i).getPredicate() +" "+ node.getTriple(i).getSubject()+ " "+
-                        node.getTriple(i).getObject()+ "?");
+    public List<InformationNode> askForArguments() {
+        List<InformationNode> nodesToAsk = argTreeEvaluator.getNodesForUser();
+        List<InformationNode> acceptedArguments = new ArrayList<>();
+        for (InformationNode node : nodesToAsk) {
+            for (int i = 0; i < node.getTripleSize(); i++) {
+                System.out.println(node.getTriple(i).getPredicate() + " " + node.getTriple(i).getSubject() + " " +
+                        node.getTriple(i).getObject() + "?");
             }
-            System.out.println("ja oder nein?");
+            System.out.println("ja oder nein oder warum?");
             Scanner in = new Scanner(System.in);
             String s = in.nextLine();
             if ("ja".equals(s.toLowerCase()))
@@ -40,20 +45,22 @@ public class ArgController {
         return acceptedArguments;
     }
 
-    public void showConclusion( ArrayList<InformationNode>  acceptedArguments){
+    public void showConclusion(ArrayList<InformationNode> acceptedArguments) {
         List<InformationNode> conlusions = argTreeEvaluator.getConclusionForUser(acceptedArguments);
-        if (conlusions.isEmpty()){
+        if (conlusions.isEmpty()) {
             System.out.println("Keine Konklusion für die Argumente möglich!");
-        }
-
-            else{
-            for (InformationNode node:conlusions) {
-                for(int i = 0; i < node.getTripleSize(); i++){
+        } else {
+            for (InformationNode node : conlusions) {
+                for (int i = 0; i < node.getTripleSize(); i++) {
                     System.out.println(node.getClaimText());
                 }
-        }
+            }
 
         }
+
+    }
+
+    public void evaluateConclusion(ArrayList<InformationNode> acceptedArguments){
 
     }
 
