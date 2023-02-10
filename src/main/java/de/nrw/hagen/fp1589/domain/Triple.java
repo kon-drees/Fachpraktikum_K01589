@@ -6,7 +6,7 @@ public class Triple {
     private String object;
 
     public String getSubject() {
-        return this.subject;
+        return this.subject.replaceAll("_", " ");
     }
 
     public void setSubject(String subject) {
@@ -14,7 +14,7 @@ public class Triple {
     }
 
     public String getPredicate() {
-        return this.predicate;
+        return this.predicate.replaceAll("_", " ");
     }
 
     public void setPredicate(String predicate) {
@@ -22,7 +22,7 @@ public class Triple {
     }
 
     public String getObject() {
-        return this.object;
+        return this.object.replaceAll("_", " ");
     }
 
     public void setObject(String object) {

@@ -57,6 +57,7 @@ public class ArgTreeReaderWriter {
                 if ("".equals(lastSubject)) {
                     lastSubject = subject.toString();
                 }
+                //System.out.println("lastsubject:" + lastSubject);
                 if (!lastSubject.equals(subject.toString())) {
                     switch (type) {
                         case "Statement" ->
@@ -64,7 +65,6 @@ public class ArgTreeReaderWriter {
                         case "I-node" -> {
                             InformationNode inode = new InformationNode();
                             inode.setLabel(lastSubject);
-                            System.out.println("inode: " + lastSubject);
                             if (jenaTriples.get("argStrength") != null) {
                                 inode.setArgStrength(Long.parseLong(jenaTriples.get("argStrength")));
                             }
@@ -145,6 +145,7 @@ public class ArgTreeReaderWriter {
 
             }
 
+
             switch (type) {
                 case "Statement" ->
                         collectedTriples.put(lastSubject, new Triple(jenaTriples.get("subject"), jenaTriples.get("predicate"), jenaTriples.get("object")));
@@ -156,7 +157,7 @@ public class ArgTreeReaderWriter {
                     inode.setClaimText(jenaTriples.get("claimText"));
                     collectediNodes.put(lastSubject, inode);
                 }
-                case "RA-Node" -> {
+                case "RA-node" -> {
                     RuleApplicationNode raNode = new RuleApplicationNode();
                     raNode.setLabel(lastSubject);
                     if (jenaTriples.containsKey("Premise")) {
@@ -274,6 +275,7 @@ public class ArgTreeReaderWriter {
         for (String id: caNodes.keySet()) {
             ConflictApplicationNode caNode = caNodes.get(id);
             if (caNode.getConflictedNode() != null) {  // Hier werden nur Referenzen auf RA-Nodes beruecksichtigt. !!!
+                System.out.println("conflicted by" + caNode.getConflictedNode().getLabel());
                 RuleApplicationNode raNode = raNodes.get(caNode.getConflictedNode().getLabel());
                 raNode.setConflictedOf(caNode);
                 caNode.setConflictedNode(raNode);
@@ -294,5 +296,4 @@ public class ArgTreeReaderWriter {
         }
         return tree;
     }
-
 }

@@ -103,9 +103,6 @@ public class TreeViewShow  {
                 circlePA.setStrokeType(StrokeType.INSIDE);
                 circlePA.setFill(Color.AZURE);
 
-                //circle.setLayoutX(200);
-                //circle.setLayoutX(100);
-
                 final Text textPA = new Text("PA");
                 textPA.setBoundsType(TextBoundsType.VISUAL);
                 textPA.setLayoutX(cx+178);
@@ -126,11 +123,58 @@ public class TreeViewShow  {
                 arrow = new Arrow();
                 arrow.setStartX(cx + 200);
                 arrow.setStartY(cy);
-                arrow.setEndX(cx + 380);
+                arrow.setEndX(cx + 280);
+                arrow.setEndY(cy);
+
+                controls.add(arrow);
+            }
+
+            if (i==0 && (childNode.getConflictedOf() != null || childNode.getConflictingOf() != null )) {
+                i = 1;
+                final Circle circleCA = new Circle(cx + 186,cy, 20);
+                circleCA.setStroke(Color.CHARTREUSE);
+                circleCA.setStrokeWidth(2);
+                circleCA.setStrokeType(StrokeType.INSIDE);
+                circleCA.setFill(Color.AZURE);
+
+                final Text textCA = new Text("CA");
+                textCA.setBoundsType(TextBoundsType.VISUAL);
+                textCA.setLayoutX(cx+178);
+                textCA.setLayoutY(cy+5);
+
+                controls.add(circleCA);
+                controls.add(textCA);
+
+
+                arrow = new Arrow();
+                arrow.setStartX(cx + 20);
+                arrow.setStartY(cy);
+                arrow.setEndX(cx + 170);
                 arrow.setEndY(cy);
 
                 controls.add(arrow);
 
+                arrow = new Arrow();
+                arrow.setStartX(cx + 200);
+                arrow.setStartY(cy);
+                arrow.setEndX(cx + 280);
+                arrow.setEndY(cy);
+
+                controls.add(arrow);
+
+                if (childNode.getConflictedOf().getConflictingNode() instanceof InformationNode) {
+                    InformationNode conflictingINode = (InformationNode) childNode.getConflictedOf().getConflictingNode();
+                    System.out.println("zeichne " + conflictingINode.getLabel());
+                    text = new TextArea(conflictingINode.getClaimText());
+                    text.setEditable(false);
+                    text.setLayoutY(110.0);
+                    text.setMaxWidth(150);
+                    text.setMaxHeight(80);
+                    text.setWrapText(true);
+                    text.setLayoutX(x + 350);
+                    controls.add(text);
+
+                }
             }
 
 
@@ -163,8 +207,8 @@ public class TreeViewShow  {
 
         Button button = new Button("Zurück");
 
-        button.setLayoutY(400);
-        button.setLayoutX(170);
+        button.setLayoutY(420);
+        button.setLayoutX(100);
 
         EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e)

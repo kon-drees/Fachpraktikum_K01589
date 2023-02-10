@@ -67,7 +67,9 @@ public class InformationNode implements Node {
         this.conclusionOf.add(raNode);
     }
 
-    @JsonIgnore
+    public  List<Triple> getTriples() {
+        return this.triples;
+    }
     public Triple getTriple(int index) {
         return this.triples.get(index);
     }
@@ -77,11 +79,10 @@ public class InformationNode implements Node {
     }
 
     @JsonIgnore
-
     public SchemaNode getPremiseOf(int index) {
         return this.premiseOf.get(index);
     }
-
+    @JsonIgnore
     public List<RuleApplicationNode>   getPremiseOf() {
         return this.premiseOf;
     }
@@ -130,17 +131,53 @@ public class InformationNode implements Node {
         //return this.premiseOf.iterator();
     //}
 
-
+    @JsonIgnore
     //Normalerweise nur conclusion eines RA-Nodes, oder auch mehrere moeglich?
     public Iterator<RuleApplicationNode> getConclusionOfNodes() {
         return this.conclusionOf.iterator();
     }
-
+    @JsonIgnore
     public ConflictApplicationNode getConflictingOf() {
         return this.conflictingOf;
     }
 
     public void setConflictingOf(ConflictApplicationNode conflictingOf) {
         this.conflictingOf = conflictingOf;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof InformationNode that)) return false;
+        if (getArgStrength() != that.getArgStrength()) return false;
+        if (getClaimText() != null ? !getClaimText().equals(that.getClaimText()) : that.getClaimText() != null)
+            return false;
+        return this.getLabel().equals(that.getLabel());
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getTriples() != null ? getTriples().hashCode() : 0;
+        result = 31 * result + (getPremiseOf() != null ? getPremiseOf().hashCode() : 0);
+        result = 31 * result + (int) (getArgStrength() ^ (getArgStrength() >>> 32));
+        result = 31 * result + (getClaimText() != null ? getClaimText().hashCode() : 0);
+        result = 31 * result + (getLabel() != null ? getLabel().hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "InformationNode{" +
+                "triples=" + triples +
+                ", premiseOf=" + premiseOf +
+                ", conclusionOf=" + conclusionOf +
+                ", conflictingOf=" + conflictingOf +
+                ", nodes=" + nodes +
+                ", argStrength=" + argStrength +
+                ", claimText='" + claimText + '\'' +
+                ", label='" + label + '\'' +
+                ", source='" + source + '\'' +
+                '}';
     }
 }

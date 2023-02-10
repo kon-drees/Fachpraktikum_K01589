@@ -103,10 +103,14 @@ public class ArgTreeEvaluator {
         }
         if (argumentList.isEmpty())
             return conclusionList;
+
+        //INode nicht aus dem Baum!
+        if (argumentList.get(0).getPremiseOf().size() == 0) {
+            argumentList = this.searchPremiseINodes(argumentList);
+        }
         Iterator<InformationNode> rootIterator = argTree.getInformationNodes();
         while (rootIterator.hasNext()) {
             InformationNode node = rootIterator.next();
-
         }
 
         for (Node inputObj : argumentList) {
@@ -119,14 +123,40 @@ public class ArgTreeEvaluator {
                         conclusionList.add((InformationNode) node.getConclusionNode());
 
                 }
-
-
             }
-
-
         }
         return conclusionList;
+    }
 
+    private List<InformationNode> searchPremiseINodes(List<InformationNode> inodes) {
+        int i = 0;
+        boolean gefunden = false;
+        InformationNode testinode = null;
+        List<InformationNode> foundINodes = new ArrayList<>();
+        List<InformationNode> searchinINodes = this.getNodesForUser();
+        if (searchinINodes == null || searchinINodes.size() == 0) {
+            return null;
+        }
+        for (InformationNode inode : inodes) {
+            if (inode.getPremiseOf().size() > 0) {
+                foundINodes.add(inode);
+                continue;
+            }
+            gefunden = false;
+            while ( i < searchinINodes.size() ) {
+                testinode = searchinINodes.get(i++);
+                if (testinode.equals(inode)) {
+                    gefunden = true;
+                    break;
+                }
+            }
+
+            if (gefunden) {
+                foundINodes.add(testinode);
+            }
+        }
+
+        return foundINodes;
     }
 
 

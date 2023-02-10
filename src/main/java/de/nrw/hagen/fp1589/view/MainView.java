@@ -64,7 +64,7 @@ public class MainView extends Application {
 
         list.setItems(items);
 
-        list.setMaxHeight(75);
+        list.setMaxHeight(225);
 
 
 
