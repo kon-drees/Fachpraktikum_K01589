@@ -128,6 +128,17 @@ public class ArgTreeEvaluator {
         return conclusionList;
     }
 
+
+    public List<InformationNode> getConclusionsForArgument(InformationNode argument){
+        List<InformationNode> conclusionList = new ArrayList<>();
+        for (RuleApplicationNode ruleApplicationNode :  argument.getPremiseOf()) {
+            conclusionList.add((InformationNode) ruleApplicationNode.getConclusionNode()) ;
+        }
+
+
+        return conclusionList;
+    }
+
     private List<InformationNode> searchPremiseINodes(List<InformationNode> inodes) {
         int i = 0;
         boolean gefunden = false;

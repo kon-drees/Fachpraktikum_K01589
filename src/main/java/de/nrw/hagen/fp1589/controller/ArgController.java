@@ -29,7 +29,9 @@ public class ArgController {
     public List<InformationNode> askForArguments() {
         List<InformationNode> nodesToAsk = argTreeEvaluator.getNodesForUser();
         List<InformationNode> acceptedArguments = new ArrayList<>();
-        for (InformationNode node : nodesToAsk) {
+        int j = 0;
+        while( j != nodesToAsk.size()) {
+            InformationNode node = nodesToAsk.get(j);
             for (int i = 0; i < node.getTripleSize(); i++) {
                 System.out.println(node.getTriple(i).getPredicate() + " " + node.getTriple(i).getSubject() + " " +
                         node.getTriple(i).getObject() + "?");
@@ -37,8 +39,14 @@ public class ArgController {
             System.out.println("ja oder nein oder warum?");
             Scanner in = new Scanner(System.in);
             String s = in.nextLine();
-            if ("ja".equals(s.toLowerCase()))
+            if ("ja".equals(s.toLowerCase())){
                 acceptedArguments.add(node);
+                j++;
+            }
+            else if ("warum".equals(s.toLowerCase()))
+                showReasoning(node);
+            else
+                j++;
 
         }
 
@@ -58,6 +66,15 @@ public class ArgController {
 
         }
 
+    }
+
+    public void showReasoning(InformationNode argument){
+
+        List<InformationNode> reasonsList =  argTreeEvaluator.getConclusionsForArgument(argument);
+        for (InformationNode node:reasonsList
+             ) {
+            System.out.println(node.getClaimText());
+        }
     }
 
     public void evaluateConclusion(ArrayList<InformationNode> acceptedArguments){
