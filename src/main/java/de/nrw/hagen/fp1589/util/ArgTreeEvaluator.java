@@ -7,6 +7,10 @@ import de.nrw.hagen.fp1589.domain.RuleApplicationNode;
 
 import java.util.*;
 
+
+/**
+ * Evaluator of an argument tree
+ */
 public class ArgTreeEvaluator {
 
 
@@ -31,7 +35,14 @@ public class ArgTreeEvaluator {
     //LOOK CONCLUSIONS OR PREMISE
 
     //last nodes of a tree don't have any premisses .
-    //so we iterate through all nodes and check if a node doesn't have any premisses more specifically no conclusion of a node
+    // so we iterate through all nodes and check if a node doesn't have any premisses more specifically no conclusion of a node
+
+    /**
+     * Returns the last information nodes to the input argument tree.
+     *
+     *
+     * @return InformationNode List
+     */
     private List<InformationNode> getLastNodes() {
         List<InformationNode> lastNodesList = new ArrayList<>();
         Iterator<InformationNode> rootIterator = argTree.getInformationNodes();
@@ -77,6 +88,12 @@ public class ArgTreeEvaluator {
     }
 
 
+    /**
+     * Returns the last information nodes to the input argument tree.
+     *
+     *
+     * @return InformationNode List
+     */
     public List<InformationNode> getNodesForUser() {
         List<InformationNode> lastNodesList = new ArrayList<>();
         lastNodesList = getLastNodes();
@@ -129,6 +146,13 @@ public class ArgTreeEvaluator {
     }
 
 
+    /**
+     * get the conclusion of the input argument of the tree
+     *
+     *
+     * @param argument Input Argument
+     * @return List InformationNode of the conclusion to the input argument
+     */
     public List<InformationNode> getConclusionsForArgument(InformationNode argument){
         List<InformationNode> conclusionList = new ArrayList<>();
         for (RuleApplicationNode ruleApplicationNode :  argument.getPremiseOf()) {

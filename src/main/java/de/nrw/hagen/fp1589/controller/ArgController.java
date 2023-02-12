@@ -8,10 +8,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Controller for the Argumentation Tree Evaluator
+ */
 public class ArgController {
+
+
 
     ArgTreeEvaluator argTreeEvaluator;
 
+    /**
+     * Constructor
+     *
+     *
+     * @param argTreeEvaluator
+     */
     public ArgController(ArgTreeEvaluator argTreeEvaluator) {
         this.argTreeEvaluator = argTreeEvaluator;
     }
@@ -20,11 +31,21 @@ public class ArgController {
         argTreeEvaluator.setArgTree(argTree);
     }
 
+    /**
+     * Starts the conversation for a potential chatbot
+     */
     public void StartConversation(){
         List<InformationNode> nodes =  askForArguments();
         showConclusion((ArrayList<InformationNode>) nodes);
     }
 
+
+    /**
+     * Program asks via console, which arguments apply to the user
+     *
+     *
+     * @return InformationNode List.
+     */
     // j n Questions
     public List<InformationNode> askForArguments() {
         List<InformationNode> nodesToAsk = argTreeEvaluator.getNodesForUser();
@@ -53,6 +74,11 @@ public class ArgController {
         return acceptedArguments;
     }
 
+    /**
+     * Calculates the Conclusion depending on the Arguments of the user
+     *
+     * @param acceptedArguments Array of the input Arguments
+     */
     public void showConclusion(ArrayList<InformationNode> acceptedArguments) {
         List<InformationNode> conlusions = argTreeEvaluator.getConclusionForUser(acceptedArguments);
         if (conlusions.isEmpty()) {
@@ -68,6 +94,13 @@ public class ArgController {
 
     }
 
+
+    /**
+     *
+     * Shows the reasoning (Conclusion) to the input Argument
+     *
+     * @param argument Input argument
+     */
     public void showReasoning(InformationNode argument){
 
         List<InformationNode> reasonsList =  argTreeEvaluator.getConclusionsForArgument(argument);
