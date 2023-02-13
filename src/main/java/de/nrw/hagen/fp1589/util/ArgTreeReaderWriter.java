@@ -1,7 +1,6 @@
 package de.nrw.hagen.fp1589.util;
 
 import de.nrw.hagen.fp1589.domain.*;
-
 import org.apache.jena.rdf.model.*;
 import org.apache.jena.rdf.model.impl.PropertyImpl;
 import org.apache.jena.rdf.model.impl.ResourceImpl;
