@@ -106,7 +106,7 @@ public class ArgController {
         List<InformationNode> reasonsList =  argTreeEvaluator.getConclusionsForArgument(argument);
         for (InformationNode node:reasonsList
              ) {
-            System.out.println(node.getClaimText());
+            System.out.println("Klärung von\n" + argument.getClaimText() + "\nkann auf\n" + node.getClaimText() + "\nschließen");
         }
     }
 

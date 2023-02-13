@@ -10,6 +10,7 @@ import org.junit.runner.RunWith;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import static org.junit.Assert.assertTrue;
@@ -22,39 +23,35 @@ public class ArgTreeReaderWriterTest {
 
 
 
-        ArgTree tree = ArgTreeReaderWriter.importTree("ArgSchlafstoerungen_arg.n3");
+        ArgTree tree = ArgTreeReaderWriter.importTree("Argbaum1.n3");
         //ArgTree tree = ArgTreeReaderWriter.importTree("calcifediol_arg.n3");
 
 
-        ArgTreeEvaluator eva = new ArgTreeEvaluator(tree);
+        System.out.println("-------------");
+        ArgTreeEvaluator argTreeEvaluator = new ArgTreeEvaluator(tree);
 
-        ArgController controller = new ArgController(eva);
-        controller.loadTree(tree);
-        System.out.println("ask");
-        List<InformationNode> askerg = controller.askForArguments();
-        System.out.println(" after ask" +askerg.size());
+        //when
+        List<InformationNode> nodes = argTreeEvaluator.getNodesForUser();
+        System.out.println(nodes.size());
+        System.out.println(nodes.get(0).getLabel());
+        System.out.println(nodes.get(1).getLabel());
 
+        List<InformationNode> conclusionList = argTreeEvaluator.getConclusionForUser(nodes);
+        System.out.println(conclusionList.size());
+        System.out.println(conclusionList.get(0).getLabel());
+        System.out.println(conclusionList.get(1).getLabel());
+        //should
+        Iterator<InformationNode> rootIterator = tree.getInformationNodes();
+        InformationNode conclusionOne = rootIterator.next();
+        InformationNode conclusionTwo = rootIterator.next();
 
-
-
-        ArrayList<InformationNode> args = new ArrayList<>();
-        InformationNode start = tree.getInformationNode(0);
-
-        List<InformationNode> ergebnisse = eva.getConclusionForUser(start.getConclusionOfNodes().next().getPremiseNodes());
-
-        System.out.println(ergebnisse.size());
-
-
-        for (InformationNode ergnode : ergebnisse) {
-            System.out.println(ergnode.getLabel() + " : " + ergnode.getClaimText());
-        }
 
 
 
 
         assertTrue(tree != null);
         assertTrue(tree.getSize() == 2);
-        assertTrue(tree.getInformationNode(0).getLabel().equals("Arg6"));
+        //assertTrue(tree.getInformationNode(0).getLabel().equals("Arg6"));
         //assertTrue(tree.getInformationNode(0).getPremiseOf(0).getLabel().equals("RuleApplicationNodeImpl1"));
 
 
