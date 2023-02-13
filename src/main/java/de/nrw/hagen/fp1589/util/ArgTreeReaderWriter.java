@@ -3,15 +3,16 @@ package de.nrw.hagen.fp1589.util;
 import de.nrw.hagen.fp1589.domain.*;
 
 import org.apache.jena.rdf.model.*;
+import org.apache.jena.rdf.model.impl.PropertyImpl;
+import org.apache.jena.rdf.model.impl.ResourceImpl;
+import org.apache.jena.rdf.model.impl.StatementImpl;
+import org.apache.jena.riot.thrift.wire.RDF_BNode;
+import org.apache.jena.vocabulary.RDF;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-
+import java.io.FileWriter;
+import java.util.*;
 
 
 public class ArgTreeReaderWriter {
@@ -57,8 +58,8 @@ public class ArgTreeReaderWriter {
                 if ("".equals(lastSubject)) {
                     lastSubject = subject.toString();
                 }
-                //System.out.println("lastsubject:" + lastSubject);
                 if (!lastSubject.equals(subject.toString())) {
+                    //System.out.println("type: " + type);
                     switch (type) {
                         case "Statement" ->
                                 collectedTriples.put(lastSubject, new Triple(jenaTriples.get("subject"), jenaTriples.get("predicate"), jenaTriples.get("object")));
@@ -295,5 +296,119 @@ public class ArgTreeReaderWriter {
             }
         }
         return tree;
+    }
+
+
+
+    public static void writeTree(String fileLocation, ArgTree tree) throws Exception {
+        final FileWriter fw = new FileWriter("src/main/resources/" + fileLocation);
+        final HashMap<String, InformationNode> collectediNodes = new HashMap<>();
+        final HashMap<String, Triple> collectedTriples = new HashMap<>();
+        final HashMap<String, RuleApplicationNode> collectedRA = new HashMap<>();
+        final HashMap<String, PreferenceApplicationNode> collectedPA = new HashMap<>();
+        final HashMap<String, ConflictApplicationNode> collectedCA = new HashMap<>();
+
+        final Model model = ModelFactory.createDefaultModel();
+
+        int i = 0;
+        for (Iterator<InformationNode> it = tree.getInformationNodes(); it.hasNext(); ) {
+            InformationNode node = it.next();
+            //createInformationNode(model, node);
+            for (Iterator<RuleApplicationNode> iter = node.getConclusionOfNodes(); iter.hasNext(); ) {
+                RuleApplicationNode ra = iter.next();
+                for (Node inode : ra.getPremiseNodes()) {
+                    createInformationNode(model, (InformationNode)  inode);
+                }
+                createInformationNode(model, (InformationNode) ra.getConclusionNode());
+                createRuleApplicationNode(model, ra);
+                if (ra.getConflictedOf() != null) {
+                    createConflictApplicationNode(model , ra.getConflictedOf());
+                }
+                if(ra.getPreferredOf() != null) {
+                    createPreferenceApplicationNode(model, ra.getPreferredOf());
+                }
+            }
+        }
+
+        model.write(fw,  "NTRIPLES");
+
+
+
+    }
+
+    private static ReifiedStatement createJenaTriple(Model model, Triple triple) {
+        var object = model.getResource(triple.getObject().replace(" " , "_"));
+        var subject = model.getResource(triple.getSubject().replace(" " , "_"));
+        var property = model.createProperty(triple.getPredicate().replace(" " , "_"));
+        var statement = model.createStatement(subject, property, object);
+        return statement.createReifiedStatement();
+    }
+
+    private static void createInformationNode(Model model, InformationNode node) {
+
+        var resource = model.createResource(node.getLabel());
+        if (model.contains(resource, RDF.type))
+            return;
+        resource.addProperty(RDF.type, model.createResource("http://www.arg.dundee.ac.uk/aif#I-node"));
+        resource.addLiteral(model.createProperty("http://www.arg.dundee.ac.uk/aif#claimText"), node.getClaimText());
+        resource.addLiteral(model.createProperty("http://www.example.org/aif#argStrength"), node.getArgStrength());
+
+        resource.addProperty(model.createProperty("http://www.example.org/aif#source"), createJenaTriple(model, node.getTriple(0)));
+    }
+
+    private static void createRuleApplicationNode(Model model, RuleApplicationNode node) {
+
+        var resource = model.createResource(node.getLabel());
+        if (model.contains(resource, RDF.type))
+            return;
+
+        resource.addProperty(RDF.type, model.createResource("http://www.arg.dundee.ac.uk/aif#RA-node"));
+
+        var conclusionNode = model.getResource(node.getConclusionNode().getLabel());
+        resource.addProperty(model.createProperty("http://www.arg.dundee.ac.uk/aif#Conclusion"), conclusionNode);
+
+        for(Node premnode : node.getPremiseNodes()) {
+            resource.addProperty(model.createProperty("http://www.arg.dundee.ac.uk/aif#Premise"), model.getResource(premnode.getLabel()));
+        }
+
+    }
+
+    private static void createConflictApplicationNode(Model model, ConflictApplicationNode node) {
+        var resource = model.createResource(node.getLabel());
+        if (model.contains(resource, RDF.type))
+            return;
+        if (node.getConflictingNode() instanceof InformationNode) {
+            createInformationNode(model, (InformationNode) node.getConflictingNode());
+        }
+        else {
+            createRuleApplicationNode(model, (RuleApplicationNode) node.getConflictingNode());
+        }
+        resource.addProperty(RDF.type, model.createResource("http://www.arg.dundee.ac.uk/aif#CA-node"));
+        var conflictedNode = model.getResource(node.getConflictedNode().getLabel());
+        resource.addProperty(model.createProperty("http://www.arg.dundee.ac.uk/aif#Conflicted"), conflictedNode);
+        var conflictingNode = model.getResource(node.getConflictingNode().getLabel());
+        resource.addProperty(model.createProperty("http://www.arg.dundee.ac.uk/aif#Conflicting"), conflictingNode);
+
+    }
+
+    private static void createPreferenceApplicationNode(Model model, PreferenceApplicationNode node) {
+        var resource = model.createResource(node.getLabel());
+        if (model.contains(resource, RDF.type))
+            return;
+        resource.addProperty(RDF.type, model.createResource("http://www.arg.dundee.ac.uk/aif#PA-node"));
+        var preferredNode = model.getResource(node.getPreferredNode().getLabel());
+        resource.addProperty(model.createProperty("http://www.arg.dundee.ac.uk/aif#Preferred"), preferredNode);
+        var dispreferredNode = model.getResource(node.getDispreferredNode().getLabel());
+        resource.addProperty(model.createProperty("http://www.arg.dundee.ac.uk/aif#Dispreferred"), dispreferredNode);
+
+    }
+
+
+    public static void main(String args[]) throws Exception {
+        ArgTree tree = ArgTreeReaderWriter.importTree("Argbaum5.n3");
+
+        ArgTreeReaderWriter.writeTree("test1.n3" , tree);
+
+
     }
 }
