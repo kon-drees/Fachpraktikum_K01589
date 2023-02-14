@@ -48,12 +48,27 @@ public class ArgTreeEvaluator {
         Iterator<InformationNode> rootIterator = argTree.getInformationNodes();
         LinkedList<Node> nodeToCheckSet = new LinkedList<>();
 
+
         //gets the premisses of the root Nodes
         while (rootIterator.hasNext()) {
             InformationNode node = rootIterator.next();
             Iterator<RuleApplicationNode> premissesIterator = node.getConclusionOfNodes();
             while (premissesIterator.hasNext()) {
-                List<Node> premissesNodesList = premissesIterator.next().getPremiseNodes();
+                RuleApplicationNode ruleApplicationNode = premissesIterator.next();
+                List<Node> premissesNodesList = ruleApplicationNode.getPremiseNodes();
+
+                // Check for conflicted single argument without a root and
+
+                if(ruleApplicationNode.getConflictedOf() != null){
+                   Node nodeToCheck = ruleApplicationNode.getConflictedOf().getConflictingNode();
+                   if (nodeToCheck instanceof InformationNode){
+                       nodeToCheckSet.add(nodeToCheck);
+                   }
+
+
+                }
+
+
                 for (Node premisses : premissesNodesList) {
                     if (!nodeToCheckSet.contains(premisses)) {
                         nodeToCheckSet.add(premisses);
@@ -136,8 +151,58 @@ public class ArgTreeEvaluator {
             for (RuleApplicationNode node :
                     ruleApplicationNodeList) {
                 if (!node.getPremiseNodes().isEmpty() && argumentList.containsAll(node.getPremiseNodes()) ) {
-                    if (!conclusionList.contains(node.getConclusionNode()))
-                        conclusionList.add((InformationNode) node.getConclusionNode());
+
+                    long premArgStrength = 0;
+                    long prefArgStrength = 0;
+                    long confArgStrength = 0;
+                    // get the strength of the premisses
+                    List<Node> nodeList = node.getPremiseNodes();
+                    for (Node iNode:nodeList
+                         ) {
+                        InformationNode iNodeA = (InformationNode) iNode;
+                        premArgStrength =  premArgStrength + iNodeA.getArgStrength();
+                    }
+
+
+                    //checks for conflicted
+                    //checks for isolated argument
+                    if(node.getConflictedOf() != null){
+                        Node nodeToCheck = node.getConflictedOf().getConflictingNode();
+                        if (nodeToCheck instanceof InformationNode){
+                            confArgStrength = confArgStrength +  ((InformationNode) nodeToCheck).getArgStrength();
+                        }
+                        if (nodeToCheck instanceof RuleApplicationNode){
+                            List<Node> conflictedNodes = ((RuleApplicationNode) nodeToCheck).getPremiseNodes();
+                            if (argumentList.containsAll(conflictedNodes)){
+                                for (Node conflictedNode :
+                                        conflictedNodes) {
+                                    InformationNode iNode = (InformationNode) conflictedNode;
+                                    confArgStrength =  confArgStrength + iNode.getArgStrength();
+                                }
+                            }
+                        }
+                    }
+
+                    if(node.getConflictingOf() != null){
+                        Node nodeToCheck = node.getConflictingOf().getConflictedNode();
+                        if (nodeToCheck instanceof InformationNode){
+                            confArgStrength = confArgStrength +  ((InformationNode) nodeToCheck).getArgStrength();
+                        }
+                        if (nodeToCheck instanceof RuleApplicationNode){
+                            List<Node> conflictedNodes = ((RuleApplicationNode) nodeToCheck).getPremiseNodes();
+                            if (argumentList.containsAll(conflictedNodes)){
+                                for (Node conflictedNode :
+                                        conflictedNodes) {
+                                    InformationNode iNode = (InformationNode) conflictedNode;
+                                    confArgStrength =  confArgStrength + iNode.getArgStrength();
+                                }
+                            }
+                        }
+                    }
+
+                    if(premArgStrength >= confArgStrength )
+                        if (!conclusionList.contains(node.getConclusionNode()))
+                            conclusionList.add((InformationNode) node.getConclusionNode());
 
                 }
             }
