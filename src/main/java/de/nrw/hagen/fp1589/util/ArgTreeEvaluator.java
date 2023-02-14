@@ -187,7 +187,7 @@ public class ArgTreeEvaluator {
                                 conclusionList.add((InformationNode) node.getConclusionNode());
                     }
 
-                    if(node.getConflictingOf() != null){
+                   else if(node.getConflictingOf() != null){
                         Node nodeToCheck = node.getConflictingOf().getConflictedNode();
                         if (nodeToCheck instanceof InformationNode){
                             confArgStrength = confArgStrength +  ((InformationNode) nodeToCheck).getArgStrength();
@@ -210,7 +210,7 @@ public class ArgTreeEvaluator {
 
 
                     //checks if preferred exist
-                    if (node.getDispreferredOf() != null){
+                   else if (node.getDispreferredOf() != null){
                             RuleApplicationNode preferedNode = (RuleApplicationNode) node.getDispreferredOf().getPreferredNode();
                             if(argumentList.containsAll(preferedNode.getPremiseNodes()) && !conclusionList.contains(node.getConclusionNode()))
                                 conclusionList.add((InformationNode) node.getConclusionNode());
@@ -218,12 +218,17 @@ public class ArgTreeEvaluator {
 
                     }
 
-                    if (node.getPreferredOf() != null){
+                   else if (node.getPreferredOf() != null){
                         RuleApplicationNode disPreferedNode = (RuleApplicationNode) node.getPreferredOf().getDispreferredNode();
                         if(!argumentList.containsAll(disPreferedNode.getPremiseNodes()) && !conclusionList.contains(node.getConclusionNode()))
                             conclusionList.add((InformationNode) node.getConclusionNode());
 
 
+                    }
+
+                    else {
+                        if (argumentList.containsAll(node.getPremiseNodes()))
+                            conclusionList.add((InformationNode) node.getConclusionNode());
                     }
 
 
