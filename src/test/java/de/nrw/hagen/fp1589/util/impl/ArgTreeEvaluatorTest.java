@@ -116,19 +116,26 @@ public class ArgTreeEvaluatorTest {
     }
 
     @Test
-    public void testEval() {
+    public void testGetReasoning() {
 
 
-        //is
         ArgTree argTree = ArgTreeReaderWriter.importTree(argLocation1);
         ArgTreeEvaluator argTreeEvaluator = new ArgTreeEvaluator(argTree);
-        ArgController argController = new ArgController(argTreeEvaluator);
+
         //when
-
-
+        List<InformationNode> nodes = argTreeEvaluator.getNodesForUser();
+        List<InformationNode> conclusionList = argTreeEvaluator.getConclusionsForArgument(nodes.get(0));
+        conclusionList.addAll(argTreeEvaluator.getConclusionsForArgument(nodes.get(1)));
         //should
-       // List<InformationNode> nodes =  argController.askForArguments();
-      //  argController.showConclusion((ArrayList<InformationNode>) nodes);
+        Iterator<InformationNode> rootIterator = argTree.getInformationNodes();
+        InformationNode conclusionOne = rootIterator.next();
+        InformationNode conclusionTwo = rootIterator.next();
+
+
+        assertEquals(conclusionOne, (conclusionList.get(0)));
+        assertEquals(conclusionTwo, (conclusionList.get(1)));
+
+
 
 
     }
