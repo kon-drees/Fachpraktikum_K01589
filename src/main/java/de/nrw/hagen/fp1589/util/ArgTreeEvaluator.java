@@ -153,7 +153,6 @@ public class ArgTreeEvaluator {
                 if (!node.getPremiseNodes().isEmpty() && argumentList.containsAll(node.getPremiseNodes()) ) {
 
                     long premArgStrength = 0;
-                    long prefArgStrength = 0;
                     long confArgStrength = 0;
                     // get the strength of the premisses
                     List<Node> nodeList = node.getPremiseNodes();
@@ -176,11 +175,16 @@ public class ArgTreeEvaluator {
                             if (argumentList.containsAll(conflictedNodes)){
                                 for (Node conflictedNode :
                                         conflictedNodes) {
+
                                     InformationNode iNode = (InformationNode) conflictedNode;
-                                    confArgStrength =  confArgStrength + iNode.getArgStrength();
+                                    if(argumentList.contains(iNode))
+                                        confArgStrength =  confArgStrength + iNode.getArgStrength();
                                 }
                             }
                         }
+                        if(premArgStrength >= confArgStrength )
+                            if (!conclusionList.contains(node.getConclusionNode()))
+                                conclusionList.add((InformationNode) node.getConclusionNode());
                     }
 
                     if(node.getConflictingOf() != null){
@@ -194,15 +198,39 @@ public class ArgTreeEvaluator {
                                 for (Node conflictedNode :
                                         conflictedNodes) {
                                     InformationNode iNode = (InformationNode) conflictedNode;
-                                    confArgStrength =  confArgStrength + iNode.getArgStrength();
+                                    if(argumentList.contains(iNode))
+                                        confArgStrength =  confArgStrength + iNode.getArgStrength();
                                 }
                             }
                         }
+                        if(premArgStrength >= confArgStrength )
+                            if (!conclusionList.contains(node.getConclusionNode()))
+                                conclusionList.add((InformationNode) node.getConclusionNode());
                     }
 
-                    if(premArgStrength >= confArgStrength )
-                        if (!conclusionList.contains(node.getConclusionNode()))
+
+                    //checks if preferred exist
+                    if (node.getDispreferredOf() != null){
+                            RuleApplicationNode preferedNode = (RuleApplicationNode) node.getDispreferredOf().getPreferredNode();
+                            if(argumentList.containsAll(preferedNode.getPremiseNodes()) && !conclusionList.contains(node.getConclusionNode()))
+                                conclusionList.add((InformationNode) node.getConclusionNode());
+
+
+                    }
+
+                    if (node.getPreferredOf() != null){
+                        RuleApplicationNode disPreferedNode = (RuleApplicationNode) node.getPreferredOf().getDispreferredNode();
+                        if(!argumentList.containsAll(disPreferedNode.getPremiseNodes()) && !conclusionList.contains(node.getConclusionNode()))
                             conclusionList.add((InformationNode) node.getConclusionNode());
+
+
+                    }
+
+
+
+
+
+
 
                 }
             }
