@@ -3,7 +3,9 @@ package de.nrw.hagen.fp1589.controller;
 import de.nrw.hagen.fp1589.domain.ArgTree;
 import de.nrw.hagen.fp1589.domain.InformationNode;
 import de.nrw.hagen.fp1589.util.ArgTreeEvaluator;
+import de.nrw.hagen.fp1589.util.ArgTreeReaderWriter;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -39,6 +41,11 @@ public class ArgController {
         showConclusion((ArrayList<InformationNode>) nodes);
     }
 
+    public void startVisualConversation(){
+        List<InformationNode> nodes =  askForArgumentsVisual();
+        showConclusionVisual((ArrayList<InformationNode>) nodes);
+    }
+
 
     /**
      * Program asks via console, which arguments apply to the user
@@ -68,9 +75,30 @@ public class ArgController {
                 showReasoning(node);
             else
                 j++;
-
         }
+        return acceptedArguments;
+    }
 
+    public List<InformationNode> askForArgumentsVisual() {
+        List<InformationNode> nodesToAsk = argTreeEvaluator.getNodesForUser();
+        List<InformationNode> acceptedArguments = new ArrayList<>();
+        int j = 0;
+        while( j != nodesToAsk.size()) {
+            InformationNode node = nodesToAsk.get(j);
+            if (node.getConflictingOf()!= null) {
+                j++;
+                continue;
+            }
+
+            int reply = JOptionPane.showConfirmDialog(null, node.getTriple(0).getPredicate() + " " +
+                    node.getTriple(0).getSubject() + "\n" + node.getTriple(0).getObject() + "?" , "Premise erfüllt?", JOptionPane.YES_NO_OPTION);
+            if (reply == JOptionPane.YES_OPTION){
+                acceptedArguments.add(node);
+                j++;
+            }
+            else
+                j++;
+        }
         return acceptedArguments;
     }
 
@@ -89,9 +117,23 @@ public class ArgController {
                     System.out.println(node.getClaimText());
                 }
             }
-
         }
+    }
 
+
+    public void showConclusionVisual(ArrayList<InformationNode> acceptedArguments) {
+        String ausgabe = "";
+        List<InformationNode> conlusions = argTreeEvaluator.getConclusionForUser(acceptedArguments);
+        if (conlusions.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Keine Konklusion für die Argumente möglich!");
+        } else {
+            for (InformationNode node : conlusions) {
+                for (int i = 0; i < node.getTripleSize(); i++) {
+                    ausgabe += node.getClaimText() + "\n\n";
+                }
+            }
+            JOptionPane.showMessageDialog(null, ausgabe);
+        }
     }
 
 

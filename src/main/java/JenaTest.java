@@ -16,7 +16,7 @@ public class JenaTest {
     static final String inputFileName  = "C:\\Apps\\GitRepos\\Fachpraktikum_K01589\\ArgSchlafstoerungen_arg.n3";
     static String personURI    = "http://somewhere/JohnSmith";
     static String fullName     = "John Smith";
-    final static String argLocation1 = "Argbaum8.n3";
+    final static String argLocation1 = "Argbaum1.n3";
  String name = "Max Mustermann";
 
     public static void main(String[] args) {

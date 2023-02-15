@@ -8,6 +8,8 @@ import java.util.List;
 public class ArgTree {
     private List<InformationNode> inodes;
 
+    private String name;
+
     public ArgTree() {
         this.inodes = new ArrayList<>();
     }
@@ -31,6 +33,16 @@ public class ArgTree {
     public Iterator<InformationNode> getEnumeration() {
         return this.getEnumeration();
     }
+
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
 
 
 }

@@ -214,7 +214,9 @@ public class ArgTreeReaderWriter {
         System.out.println("ranodes:" + collectedRA.size());
 
 
-        return createTree(collectediNodes,collectedRA, collectedTriples, collectedPA, collectedCA);
+        ArgTree tree = createTree(collectediNodes,collectedRA, collectedTriples, collectedPA, collectedCA);
+        tree.setName(fileLocation);
+        return tree;
 
     }
 
