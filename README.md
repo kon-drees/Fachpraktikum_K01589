@@ -18,22 +18,24 @@ Bei der vorliegenden Anwendung handelt es sich um eine Java Spring Boot Anwendun
 
 ### Funktionsweiße der Anwendung:
 
-#### Argumentationsbäume anzeigen:
 
-Unter dem Package *view* findet man die Klasse *MainShower*. Wenn man diese ausführt, öffnet sich ein Hauptmenü dass alle hinterlegten Arguementationsbäume anzeigt. 
 
-![image](https://user-images.githubusercontent.com/122731286/219050796-dd6206ae-2f5c-4b20-80b2-8933c386bb7f.png)
+Unter dem Package *view* findet man die Klasse *MainShower*. Wenn die Klasse ausgeführt wird öffnet sich ein Dialog, der alle hinterlegten Arguementationsbäume anzeigt. 
 
-Hier kann man sich einen Argumentationsbaum aussuchen und anzeigen lassen:
+![image](https://user-images.githubusercontent.com/122731286/219120834-48efd5ba-eac5-4427-bd82-eefbb903c538.png)
 
-![image](https://user-images.githubusercontent.com/122731286/219050925-42747141-cec4-44d3-8f13-3163d98bb191.png)
+Hier kann man sich einen Argumentationsbaum aus der Liste auswählen und sich anzeigen lassen.
 
+![image](https://user-images.githubusercontent.com/122731286/219120686-4494cce3-071d-4eff-a372-f0adaa0bbdd4.png)
+
+Zusätzlich ist es möglich die ArgStrenght der einzelnen Prämissen anzupassen, falls bei den I-Nodes eine ArgStrenght hinterlegt ist. 
+
+
+Wenn man auf den Button *Dialog starten* klickt, dann öffnet sich ein Dialog bei dem der Patient/User gefragt wird, ob die jeweilige Prämisse der Arguementationsbäumen eintreffen, um so auf eine Conclusion zu schließen und eine Diagnose zu erstellen.
 
 #### REST-API
 
 folgt...
 
-#### Erklärungskomponente
 
-folgt...
 
