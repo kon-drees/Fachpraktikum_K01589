@@ -50,7 +50,7 @@ Wenn man auf den Button *Dialog starten* klickt, dann öffnet sich ein Dialog be
 
 #### REST-API
 
-In unserer Spring Boot Anwendung wurde ein Microservice implementiert , worüber der Chatbot und die Erklärungskomponente per REST-Schnittstelle miteinander kommunizieren können. Dabei erfolgt der Datenaustausch über JSON. 
+In der Spring Boot Anwendung wurde ein Microservice implementiert, worüber der Chatbot und die Erklärungskomponente per REST-Schnittstelle miteinander kommunizieren können. Dabei erfolgt der Datenaustausch über JSON. 
 
 
 Mit dem Befehl *settree* kann man einen Baum auswählen:
@@ -63,7 +63,7 @@ http://localhost:8080/getpremises
 
 Der Befehl *getconclusions* zeigt die Konklusion des ausgeählten Baumes an:
 
-http://localhost:8080/getpremises
+http://localhost:8080/getconclusions
 
 
 
