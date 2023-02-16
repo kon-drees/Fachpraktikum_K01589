@@ -50,15 +50,20 @@ Wenn man auf den Button *Dialog starten* klickt, dann öffnet sich ein Dialog be
 
 #### REST-API
 
-In unserer Spring Boot Anwendung wurde ein Microservice implementiert , worüber der Chatbot und die Erklärungskomponente per REST-Schnittstelle miteinander kommunizieren können. So ist es für den Experten möglich die einzelnen Argumentationsbäume bei Bedarf anzupassen.
+In unserer Spring Boot Anwendung wurde ein Microservice implementiert , worüber der Chatbot und die Erklärungskomponente per REST-Schnittstelle miteinander kommunizieren können. Dabei erfolgt der Datenaustausch über JSON. 
 
 
-zugriff über localhost...
+Mit dem Befehl *settree* kann man einen Baum auswählen:
 
-funktion getpremisses
+http://localhost:8080/settree?tree=Argbaum1
 
-funktion get conclusions
+Der Befehl *getpremises* zeigt die Prämissen des ausgewählten Baumes an:
 
-funktion set tree
+http://localhost:8080/getpremises
+
+Der Befehl *getconclusions* zeigt die Konklusion des ausgeählten Baumes an:
+
+http://localhost:8080/getpremises
+
 
 
