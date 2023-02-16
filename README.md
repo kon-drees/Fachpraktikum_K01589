@@ -2,6 +2,17 @@
 
 Erstellung einer Erklärungskomponente für einen informationellen medizinischen Chatbot mittels Argumentationsbäumen im Fachpraktikum "Natural Language Processing, Information Extraction und Retrieval" der FernUniversität in Hagen
 ***
+
+## Inhaltsübersicht
+
+
+- [Fachpraktikum_K01589](#fachpraktikum_k01589)
+  * [Beschreibung](#beschreibung)
+    + [Verwendete Techniken:](#verwendete-techniken)
+    + [Funktionsweiße der Anwendung:](#funktionsweiße-der-anwendung)
+      - [REST-API](#rest-api)
+
+
 ## Beschreibung
 
 Bei der vorliegenden Anwendung handelt es sich um eine Java Spring Boot Anwendung, die einen Prototypen für eine Erklärungskomponente darstellt. Dabei werden Argumentationsbäume im AIF-Format eingelesen und verarbeitet. 
@@ -20,7 +31,7 @@ Bei der vorliegenden Anwendung handelt es sich um eine Java Spring Boot Anwendun
 
 
 
-Unter dem Package *view* findet man die Klasse *MainShower*. Wenn die Klasse ausgeführt wird öffnet sich ein Dialog, der alle hinterlegten Arguementationsbäume anzeigt. 
+Unter dem Package *view* findet man die Klasse *MainShower*. Wenn die Klasse ausgeführt wird öffnet sich ein Dialog, der alle hinterlegten Argumentationsbäume anzeigt. 
 
 ![image](https://user-images.githubusercontent.com/122731286/219120834-48efd5ba-eac5-4427-bd82-eefbb903c538.png)
 
