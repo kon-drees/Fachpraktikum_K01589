@@ -9,7 +9,7 @@ Erstellung einer Erklärungskomponente für einen informationellen medizinischen
 - [Fachpraktikum_K01589](#fachpraktikum_k01589)
   * [Beschreibung](#beschreibung)
     + [Verwendete Techniken:](#verwendete-techniken)
-    + [Funktionsweiße der Anwendung:](#funktionsweiße-der-anwendung)
+    + [Funktionsweise der Anwendung:](#funktionsweiße-der-anwendung)
       - [REST-API](#rest-api)
 
 
@@ -27,17 +27,21 @@ Bei der vorliegenden Anwendung handelt es sich um eine Java Spring Boot Anwendun
 - Ressource Description Framework
 
 
-### Funktionsweiße der Anwendung:
+### Funktionsweise der Anwendung:
 
 
 
-Unter dem Package *view* findet man die Klasse *MainShower*. Wenn die Klasse ausgeführt wird öffnet sich ein Dialog, der alle hinterlegten Argumentationsbäume anzeigt. 
+Unter dem Package *view* findet man die Klasse *MainShower*. Führt man die Klasse aus, so öffnet sich ein Dialog, der alle hinterlegten Argumentationsbäume anzeigt.
 
-![image](https://user-images.githubusercontent.com/122731286/219120834-48efd5ba-eac5-4427-bd82-eefbb903c538.png)
 
-Hier kann man sich einen Argumentationsbaum aus der Liste auswählen und sich anzeigen lassen.
+![image](https://user-images.githubusercontent.com/122731286/219345453-60dc101a-05d1-4fca-a222-b795fb7bba09.png)
 
-![image](https://user-images.githubusercontent.com/122731286/219120686-4494cce3-071d-4eff-a372-f0adaa0bbdd4.png)
+
+Hier kann man einen Argumentationsbaum aus der Liste auswählen und sich anzeigen lassen.
+
+
+![image](https://user-images.githubusercontent.com/122731286/219345739-dd7d4f5b-b963-4058-9477-09f121d89303.png)
+
 
 Zusätzlich ist es möglich die ArgStrenght der einzelnen Prämissen anzupassen, falls bei den I-Nodes eine ArgStrenght hinterlegt ist. 
 
@@ -46,7 +50,15 @@ Wenn man auf den Button *Dialog starten* klickt, dann öffnet sich ein Dialog be
 
 #### REST-API
 
-folgt...
+In unserer Spring Boot Anwendung wurde ein Microservice implementiert , worüber der Chatbot und die Erklärungskomponente per REST-Schnittstelle miteinander kommunizieren können. So ist es für den Experten möglich die einzelnen Argumentationsbäume bei Bedarf anzupassen.
 
+
+zugriff über localhost...
+
+funktion getpremisses
+
+funktion get conclusions
+
+funktion set tree
 
 
