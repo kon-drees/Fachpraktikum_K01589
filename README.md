@@ -43,14 +43,14 @@ Hier kann man einen Argumentationsbaum aus der Liste auswählen und sich anzeige
 ![image](https://user-images.githubusercontent.com/122731286/219345739-dd7d4f5b-b963-4058-9477-09f121d89303.png)
 
 
-Zusätzlich ist es möglich die ArgStrenght der einzelnen Prämissen anzupassen, falls bei den I-Nodes eine ArgStrenght hinterlegt ist. 
+Zusätzlich ist es möglich die ArgStrength der einzelnen Prämissen anzupassen, falls bei den I-Nodes eine ArgStrength hinterlegt ist. 
 
 
-Wenn man auf den Button *Dialog starten* klickt, dann öffnet sich ein Dialog bei dem der Patient/User gefragt wird, ob die jeweilige Prämisse der Arguementationsbäumen eintreffen, um so auf eine Conclusion zu schließen und eine Diagnose zu erstellen.
+Wenn man auf den Button *Dialog starten* klickt, dann öffnet sich ein Dialog bei dem der User gefragt wird, ob die jeweilige Prämisse der Arguementationsbäumen eintreffen, um so auf eine Conclusion zu schließen und eine Diagnose zu erstellen.
 
 #### REST-API
 
-In der Spring Boot Anwendung wurde ein Microservice implementiert, worüber der Chatbot und die Erklärungskomponente per REST-Schnittstelle miteinander kommunizieren können. Dabei erfolgt der Datenaustausch über JSON. 
+In der Spring Boot Anwendung wurden Microservices implementiert, worüber z.B. ein möglicher Chatbot auf die Erklärungskomponente per REST-Schnittstelle miteinander kommunizieren können. Dabei erfolgt der Datenaustausch über JSON. 
 
 
 Mit dem Befehl *settree* kann man einen Baum auswählen:
@@ -61,7 +61,7 @@ Der Befehl *getpremises* zeigt die Prämissen des ausgewählten Baumes an:
 
 http://localhost:8080/getpremises
 
-Der Befehl *getconclusions* zeigt die Konklusion des ausgeählten Baumes an:
+Der Befehl *getconclusions* zeigt die Konklusion des ausgewählten Baumes an:
 
 http://localhost:8080/getconclusions
 
