@@ -72,8 +72,15 @@ http://localhost:8080/getconclusions
 
 Getestet werden können diese drei Mathoden per curl wie folgt:
 
-curl localhost:8080/settree?tree=Argbaumx  (Nummer des Argbaums festlegen)
+
+```curl
+curl localhost:8080/settree?tree=Argbaumx  (Nummer des Argbaums festlegen) 
+```
+
+```curl
 curl localhost:8080/getpremises
+```
+
 
 Das Ergebnis dieses Aufrufs kann anschließend in eine txt-Datei gespeichert werden, z.B. t1.txt
 
@@ -81,7 +88,9 @@ Die Premises, die nicht erfüllt, sofern vorhanden, sind in der Datei zu entfern
 
 Abschließend bekommt man die conclusion(s) mittels
 
+```curl
 curl localhost:8080/getconclusions -X PUT -d @t1.txt -H "Content-Type: application/json"
+```
 
 
 #### Kommandozeile
