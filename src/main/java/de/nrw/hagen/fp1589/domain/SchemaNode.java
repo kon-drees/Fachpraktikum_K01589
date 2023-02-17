@@ -1,11 +1,13 @@
 package de.nrw.hagen.fp1589.domain;
 
+@SuppressWarnings("unused")
 public class SchemaNode implements Node {
 
     private String claim;
 
     private String label;
 
+    @SuppressWarnings("unused")
     public SchemaNode(String label, String claim) {
         this.setLabel(label);
         this.claim = claim;
@@ -20,9 +22,6 @@ public class SchemaNode implements Node {
         return claim;
     }
 
-    public void setClaim(String claim) {
-        this.claim = claim;
-    }
 
     @Override
     public String getLabel() {

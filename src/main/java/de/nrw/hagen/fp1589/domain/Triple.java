@@ -1,5 +1,6 @@
 package de.nrw.hagen.fp1589.domain;
 
+@SuppressWarnings("unused")
 public class Triple {
     private String subject;
     private String predicate;

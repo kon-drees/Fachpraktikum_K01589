@@ -1,7 +1,4 @@
 package de.nrw.hagen.fp1589.util.impl;
-
-
-import de.nrw.hagen.fp1589.controller.ArgController;
 import de.nrw.hagen.fp1589.domain.ArgTree;
 import de.nrw.hagen.fp1589.domain.InformationNode;
 import de.nrw.hagen.fp1589.domain.Node;
@@ -17,6 +14,7 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 
+@SuppressWarnings("deprecation")
 @RunWith(JUnit4ClassRunner.class)
 public class ArgTreeEvaluatorTest {
 
@@ -25,6 +23,7 @@ public class ArgTreeEvaluatorTest {
     final String argLocation2 = "Argbaum6.n3";
 
 
+    @SuppressWarnings("DataFlowIssue")
     @Test
     public void testGetLastNodesOne() {
 
@@ -37,7 +36,7 @@ public class ArgTreeEvaluatorTest {
         List<InformationNode> nodes = argTreeEvaluator.getNodesForUser();
 
         //should
-        Iterator<InformationNode> rootIterator = argTree.getInformationNodes();
+        Iterator<InformationNode> rootIterator = argTree != null ? argTree.getInformationNodes() : null;
         Node nodeOne = rootIterator.next().getConclusionOfNodes().next().getPremiseNodes().get(0);
         Node nodeTwo = rootIterator.next().getConclusionOfNodes().next().getPremiseNodes().get(0);
 
@@ -49,6 +48,7 @@ public class ArgTreeEvaluatorTest {
     }
 
 
+    @SuppressWarnings("DataFlowIssue")
     @Test
     public void testGetLastNodesTwo() {
 
@@ -61,7 +61,10 @@ public class ArgTreeEvaluatorTest {
         List<InformationNode> nodes = argTreeEvaluator.getNodesForUser();
 
         //should
-        Iterator<InformationNode> rootIterator = argTree.getInformationNodes();
+        Iterator<InformationNode> rootIterator = null;
+        if (argTree != null) {
+            rootIterator = argTree.getInformationNodes();
+        }
         List<Node> nodesList = rootIterator.next().getConclusionOfNodes().next().getPremiseNodes();
 
 
@@ -72,6 +75,7 @@ public class ArgTreeEvaluatorTest {
 
     }
 
+    @SuppressWarnings("DataFlowIssue")
     @Test
     public void testGetConclusionForUserOne() {
         //is
@@ -83,7 +87,10 @@ public class ArgTreeEvaluatorTest {
         List<InformationNode> conclusionList = argTreeEvaluator.getConclusionForUser(nodes);
 
         //should
-        Iterator<InformationNode> rootIterator = argTree.getInformationNodes();
+        Iterator<InformationNode> rootIterator = null;
+        if (argTree != null) {
+            rootIterator = argTree.getInformationNodes();
+        }
         InformationNode conclusionOne = rootIterator.next();
         InformationNode conclusionTwo = rootIterator.next();
 
@@ -93,6 +100,7 @@ public class ArgTreeEvaluatorTest {
 
     }
 
+    @SuppressWarnings("DataFlowIssue")
     @Test
     public void testGetConclusionForUserTwo() {
         //is
@@ -105,7 +113,10 @@ public class ArgTreeEvaluatorTest {
         List<InformationNode> conclusionList = argTreeEvaluator.getConclusionForUser(nodes);
 
         //should
-        Iterator<InformationNode> rootIterator = argTree.getInformationNodes();
+        Iterator<InformationNode> rootIterator = null;
+        if (argTree != null) {
+            rootIterator = argTree.getInformationNodes();
+        }
         InformationNode conclusionOne = rootIterator.next();
         InformationNode conclusionTwo = rootIterator.next();
 
@@ -127,6 +138,7 @@ public class ArgTreeEvaluatorTest {
         List<InformationNode> conclusionList = argTreeEvaluator.getConclusionsForArgument(nodes.get(0));
         conclusionList.addAll(argTreeEvaluator.getConclusionsForArgument(nodes.get(1)));
         //should
+        assert argTree != null;
         Iterator<InformationNode> rootIterator = argTree.getInformationNodes();
         InformationNode conclusionOne = rootIterator.next();
         InformationNode conclusionTwo = rootIterator.next();

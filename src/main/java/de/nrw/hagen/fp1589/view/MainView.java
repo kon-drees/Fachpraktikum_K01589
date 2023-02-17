@@ -1,6 +1,4 @@
 package de.nrw.hagen.fp1589.view;
-
-import de.nrw.hagen.fp1589.util.ArgTreeReaderWriter;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,7 +12,6 @@ import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 
 import java.io.File;
-import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,46 +19,39 @@ public class MainView extends Application {
 
 
     private TreeViewShow frmTree;
-    private ListView<String> list;
+    private final ListView<String> list = new ListView<>();
 
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) {
         Button button = new Button("Baumdatei auswählen");
         button.setLayoutX(30);
         button.setLayoutY(20);
-        EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent e)
-            {
-                try {
-                    if (list.getSelectionModel().getSelectedItem() != null) {
-                        Scene sc = frmTree.start(list.getSelectionModel().getSelectedItem());
-                        stage.setScene(sc);
-                        stage.setTitle("Baumansicht");
-                    }
-                    else {
-                        button.setText("Bitte in der Liste eine Datei auswählen");
-                    }
-                } catch (Exception ex) {
-                    throw new RuntimeException(ex);
+        EventHandler<ActionEvent> event = e -> {
+            try {
+                if (list.getSelectionModel().getSelectedItem() != null) {
+                    Scene sc = frmTree.start(list.getSelectionModel().getSelectedItem());
+                    stage.setScene(sc);
+                    stage.setTitle("Baumansicht");
                 }
+                else {
+                    button.setText("Bitte in der Liste eine Datei auswählen");
+                }
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
             }
         };
         button.setOnAction(event);
-
-
-
-
 
         ObservableList<String> items = FXCollections.observableArrayList();
 
 
         final File f = new File("src/main/resources/");
         File[] fileArray = f. listFiles();
-        for (File fname : fileArray) {
-            items.add(fname.getName());
+        if (fileArray != null) {
+            for (File fname : fileArray) {
+                items.add(fname.getName());
+            }
         }
-
-        list = new ListView();
 
         list.setLayoutX(300);
         list.setLayoutY(20);

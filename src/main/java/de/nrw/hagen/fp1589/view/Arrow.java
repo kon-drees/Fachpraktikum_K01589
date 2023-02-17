@@ -36,8 +36,9 @@ public class Arrow extends Group {
                 arrow2.setStartX(ex);
                 arrow2.setStartY(ey);
             } else {
-                double factor = arrowLength / Math.hypot(sx-ex, sy-ey);
-                double factorO = arrowWidth / Math.hypot(sx-ex, sy-ey);
+                double nenner = Math.hypot(sx-ex, sy-ey);
+                double factor = arrowLength / nenner;
+                double factorO = arrowWidth / nenner;
 
                 // part in direction of main line
                 double dx = (sx - ex) * factor;

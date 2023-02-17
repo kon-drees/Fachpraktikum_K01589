@@ -2,22 +2,18 @@ package de.nrw.hagen.fp1589.util;
 
 import de.nrw.hagen.fp1589.domain.*;
 import org.apache.jena.rdf.model.*;
-import org.apache.jena.rdf.model.impl.PropertyImpl;
-import org.apache.jena.rdf.model.impl.ResourceImpl;
-import org.apache.jena.rdf.model.impl.StatementImpl;
-import org.apache.jena.riot.thrift.wire.RDF_BNode;
 import org.apache.jena.vocabulary.RDF;
-
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.*;
 
 
+@SuppressWarnings("HttpUrlsUsage")
 public class ArgTreeReaderWriter {
 
     public static ArgTree importTree(String fileLocation) {
-        // create an empty model
+
         final HashMap<String, InformationNode> collectediNodes = new HashMap<>();
         final HashMap<String, Triple> collectedTriples = new HashMap<>();
         final HashMap<String, RuleApplicationNode> collectedRA = new HashMap<>();
@@ -25,16 +21,12 @@ public class ArgTreeReaderWriter {
         final HashMap<String, ConflictApplicationNode> collectedCA = new HashMap<>();
 
         try {
-
-
             final FileReader fr = new FileReader("src/main/resources/" + fileLocation);
 
-            String lastSubject = "";
+            String lastSubject = "";  //Einfacher Gruppenwechsel. lastsubject solange gleich, bis naechster Node anfaengt.
             String type="";
 
-
-            final HashMap<String, String> jenaTriples = new HashMap<>();
-
+            final HashMap<String, String> jenaTriples = new HashMap<>();  //Jede Zeile der n3-Datei sammeln, bis node vollstaendig eingelesen ist
             final Model model = ModelFactory.createDefaultModel();
             try {
                 model.read(fr, null, "NTRIPLES");
@@ -57,145 +49,30 @@ public class ArgTreeReaderWriter {
                 if ("".equals(lastSubject)) {
                     lastSubject = subject.toString();
                 }
-                if (!lastSubject.equals(subject.toString())) {
-                    //System.out.println("type: " + type);
-                    switch (type) {
-                        case "Statement" ->
-                                collectedTriples.put(lastSubject, new Triple(jenaTriples.get("subject"), jenaTriples.get("predicate"), jenaTriples.get("object")));
-                        case "I-node" -> {
-                            InformationNode inode = new InformationNode();
-                            inode.setLabel(lastSubject);
-                            if (jenaTriples.get("argStrength") != null) {
-                                inode.setArgStrength(Long.parseLong(jenaTriples.get("argStrength")));
-                            }
-                            inode.setSource(jenaTriples.get("source"));
-                            inode.setClaimText(jenaTriples.get("claimText"));
-                            collectediNodes.put(lastSubject, inode);
-                        }
-                        case "RA-node" -> {
-                            RuleApplicationNode raNode = new RuleApplicationNode();
-                            raNode.setLabel(lastSubject);
-                            if (jenaTriples.containsKey("Premise")) {
-                                raNode.addPremiseNode(new EmptyNode(jenaTriples.get("Premise")));
-                                int j = 1;
-                                while (jenaTriples.containsKey("Premise" + j)) {
-                                    raNode.addPremiseNode(new EmptyNode(jenaTriples.get("Premise" + j)));
-                                    j++;
-                                }
-                            }
-                            if (jenaTriples.containsKey("Conclusion")) {
-                                raNode.setConclusionNode(new EmptyNode(jenaTriples.get("Conclusion")));
-                            }
-                            collectedRA.put(lastSubject, raNode);
-                        }
-                        case "PA-node" -> {
-                            PreferenceApplicationNode paNode = new PreferenceApplicationNode();
-                            paNode.setLabel(lastSubject);
-                            if (jenaTriples.containsKey("Preferred")) {
-                                paNode.setPreferredNode(new EmptyNode(jenaTriples.get("Preferred")));
-                            }
-                            if (jenaTriples.containsKey("Dispreferred")) {
-                                paNode.setDisPreferredNode(new EmptyNode(jenaTriples.get("Dispreferred")));
-                            }
-                            collectedPA.put(lastSubject, paNode);
-                        }
-                        case "CA-node" -> {
-                            ConflictApplicationNode caNode = new ConflictApplicationNode();
-                            caNode.setLabel(lastSubject);
-                            if (jenaTriples.containsKey("Conflicted")) {
-                                caNode.setConflictedNode(new EmptyNode(jenaTriples.get("Conflicted")));
-                            }
-                            if (jenaTriples.containsKey("Conflicting")) {
-                                caNode.setConflictingNode(new EmptyNode(jenaTriples.get("Conflicting")));
-                            }
-                            collectedCA.put(lastSubject, caNode);
-                        }
-                    }
+                if (!lastSubject.equals(subject.toString())) {  //Gruppenwechsel: Naechster node beginnt, bisher eingelesene jenatriples auswerten und Node erzeugen
+                    collectNode(type, lastSubject, jenaTriples, collectedCA , collectedPA, collectedRA, collectedTriples, collectediNodes);
                     lastSubject = subject.toString();
                     jenaTriples.clear();
                     i = 0;
                 }
 
-
-
+                //type merken, anhand dessen wird entschieden, welcher NodeType angelegt wird.
                 if ("type".equals(predicate.getLocalName())) {
                     type = object.asResource().getLocalName();
                 }
                 if ("argStrength".equals(predicate.getLocalName())) {
                     jenaTriples.put("argStrength", String.valueOf(object.asLiteral().getLong()));
                 } else {
-                    if (jenaTriples.containsKey(predicate.getLocalName())) {
+                    if (jenaTriples.containsKey(predicate.getLocalName())) {  //Falls Attribut mehrfach vorkommt, z.B. premise, dann wird durchnummeriert
                         i++;
                         jenaTriples.put(predicate.getLocalName() + i, object.toString());
                     } else {
                         jenaTriples.put(predicate.getLocalName(), object.toString());
                     }
                 }
-
-                //System.out.print(subject.toString());
-                //System.out.print(" " + predicate.getLocalName() + " ");
-                /*
-                if (object instanceof Resource) {
-                    //System.out.print(object.toString());
-                } else {
-                    // object is a literal
-                    //System.out.print(" \"" + object.toString() + "\"");
-                }
-*/
-
             }
-
-
-            switch (type) {
-                case "Statement" ->
-                        collectedTriples.put(lastSubject, new Triple(jenaTriples.get("subject"), jenaTriples.get("predicate"), jenaTriples.get("object")));
-                case "I-node" -> {
-                    InformationNode inode = new InformationNode();
-                    inode.setLabel(lastSubject);
-                    inode.setArgStrength(Long.parseLong(jenaTriples.get("argStrength")));
-                    inode.setSource(jenaTriples.get("source"));
-                    inode.setClaimText(jenaTriples.get("claimText"));
-                    collectediNodes.put(lastSubject, inode);
-                }
-                case "RA-node" -> {
-                    RuleApplicationNode raNode = new RuleApplicationNode();
-                    raNode.setLabel(lastSubject);
-                    if (jenaTriples.containsKey("Premise")) {
-                        raNode.addPremiseNode(new EmptyNode(jenaTriples.get("Premise")));
-                        int j = 1;
-                        while (jenaTriples.containsKey("Premise" + j)) {
-                            raNode.addPremiseNode(new EmptyNode(jenaTriples.get("Premise" + j)));
-                            j++;
-                        }
-                    }
-                    if (jenaTriples.containsKey("Conclusion")) {
-                        raNode.setConclusionNode(new EmptyNode(jenaTriples.get("Conclusion")));
-                    }
-                    collectedRA.put(lastSubject, raNode);
-                }
-                case "PA-node" -> {
-                    PreferenceApplicationNode paNode = new PreferenceApplicationNode();
-                    paNode.setLabel(lastSubject);
-                    if (jenaTriples.containsKey("Preferred")) {
-                        paNode.setPreferredNode(new EmptyNode(jenaTriples.get("Preferred")));
-                    }
-                    if (jenaTriples.containsKey("Dispreferred")) {
-                        paNode.setDisPreferredNode(new EmptyNode(jenaTriples.get("Dispreferred")));
-                    }
-                    collectedPA.put(lastSubject, paNode);
-                }
-                case "CA-node" -> {
-                    ConflictApplicationNode caNode = new ConflictApplicationNode();
-                    caNode.setLabel(lastSubject);
-                    if (jenaTriples.containsKey("Conflicted")) {
-                        caNode.setConflictedNode(new EmptyNode(jenaTriples.get("Conflicted")));
-                    }
-                    if (jenaTriples.containsKey("Conflicting")) {
-                        caNode.setConflictingNode(new EmptyNode(jenaTriples.get("Conflicting")));
-                    }
-                    collectedCA.put(lastSubject, caNode);
-                }
-            }
+            //Letzten Node nicht vergessen.
+            collectNode(type, lastSubject, jenaTriples, collectedCA , collectedPA, collectedRA, collectedTriples, collectediNodes);
             fr.close();
 
         }
@@ -208,22 +85,12 @@ public class ArgTreeReaderWriter {
         catch (Exception ex) {
             ex.printStackTrace();
         }
-
-        System.out.println("inodes:" + collectediNodes.size());
-        System.out.println("statements:" + collectedTriples.size());
-        System.out.println("ranodes:" + collectedRA.size());
-
-
-        ArgTree tree = createTree(collectediNodes,collectedRA, collectedTriples, collectedPA, collectedCA);
-        tree.setName(fileLocation);
+        ArgTree tree = createTree(collectediNodes,collectedRA, collectedTriples, collectedPA, collectedCA);  //Nodes miteinander verbinden.
+        tree.setName(fileLocation);  //Um Baum zureuck speichern zu koennen merkt er sich seinen Namen.
         return tree;
-
     }
 
 
-    public static void printTree(ArgTree tree) {
-        //RDFDataMgr.write(System.out, this.importedModel, RDFFormat.NT) ;
-    }
 
     private static ArgTree createTree(Map<String, InformationNode> iNodes, Map<String, RuleApplicationNode> raNodes , Map<String, Triple> triples , Map<String, PreferenceApplicationNode> paNodes, Map<String, ConflictApplicationNode> caNodes) {
         final ArgTree tree = new ArgTree();
@@ -299,19 +166,67 @@ public class ArgTreeReaderWriter {
         return tree;
     }
 
+    private static void collectNode(String type, String subject, final HashMap<String, String> jenaTriples, final HashMap<String, ConflictApplicationNode> collectedCA ,
+                                    final HashMap<String, PreferenceApplicationNode> collectedPA , final HashMap<String, RuleApplicationNode> collectedRA , final HashMap<String, Triple> collectedTriples, final HashMap<String, InformationNode> collectediNodes ) {
+
+        switch (type) {
+            case "Statement" ->
+                    collectedTriples.put(subject, new Triple(jenaTriples.get("subject"), jenaTriples.get("predicate"), jenaTriples.get("object")));
+            case "I-node" -> {
+                InformationNode inode = new InformationNode();
+                inode.setLabel(subject);
+                inode.setArgStrength(Long.parseLong(jenaTriples.get("argStrength")));
+                inode.setSource(jenaTriples.get("source"));
+                inode.setClaimText(jenaTriples.get("claimText"));
+                collectediNodes.put(subject, inode);
+            }
+            case "RA-node" -> {
+                RuleApplicationNode raNode = new RuleApplicationNode();
+                raNode.setLabel(subject);
+                if (jenaTriples.containsKey("Premise")) {
+                    raNode.addPremiseNode(new EmptyNode(jenaTriples.get("Premise")));
+                    int j = 1;
+                    while (jenaTriples.containsKey("Premise" + j)) {
+                        raNode.addPremiseNode(new EmptyNode(jenaTriples.get("Premise" + j)));
+                        j++;
+                    }
+                }
+                if (jenaTriples.containsKey("Conclusion")) {
+                    raNode.setConclusionNode(new EmptyNode(jenaTriples.get("Conclusion")));
+                }
+                collectedRA.put(subject, raNode);
+            }
+            case "PA-node" -> {
+                PreferenceApplicationNode paNode = new PreferenceApplicationNode();
+                paNode.setLabel(subject);
+                if (jenaTriples.containsKey("Preferred")) {
+                    paNode.setPreferredNode(new EmptyNode(jenaTriples.get("Preferred")));
+                }
+                if (jenaTriples.containsKey("Dispreferred")) {
+                    paNode.setDisPreferredNode(new EmptyNode(jenaTriples.get("Dispreferred")));
+                }
+                collectedPA.put(subject, paNode);
+            }
+            case "CA-node" -> {
+                ConflictApplicationNode caNode = new ConflictApplicationNode();
+                caNode.setLabel(subject);
+                if (jenaTriples.containsKey("Conflicted")) {
+                    caNode.setConflictedNode(new EmptyNode(jenaTriples.get("Conflicted")));
+                }
+                if (jenaTriples.containsKey("Conflicting")) {
+                    caNode.setConflictingNode(new EmptyNode(jenaTriples.get("Conflicting")));
+                }
+                collectedCA.put(subject, caNode);
+            }
+        }
+    }
+
 
 
     public static void writeTree(String fileLocation, ArgTree tree) throws Exception {
         final FileWriter fw = new FileWriter("src/main/resources/" + fileLocation);
-        final HashMap<String, InformationNode> collectediNodes = new HashMap<>();
-        final HashMap<String, Triple> collectedTriples = new HashMap<>();
-        final HashMap<String, RuleApplicationNode> collectedRA = new HashMap<>();
-        final HashMap<String, PreferenceApplicationNode> collectedPA = new HashMap<>();
-        final HashMap<String, ConflictApplicationNode> collectedCA = new HashMap<>();
 
         final Model model = ModelFactory.createDefaultModel();
-
-        int i = 0;
         for (Iterator<InformationNode> it = tree.getInformationNodes(); it.hasNext(); ) {
             InformationNode node = it.next();
             //createInformationNode(model, node);
@@ -405,10 +320,12 @@ public class ArgTreeReaderWriter {
     }
 
 
-    public static void main(String args[]) throws Exception {
+    public static void main(String[] args) throws Exception {
         ArgTree tree = ArgTreeReaderWriter.importTree("Argbaum5.n3");
 
-        ArgTreeReaderWriter.writeTree("test1.n3" , tree);
+        if (tree != null) {
+            ArgTreeReaderWriter.writeTree("test1.n3" , tree);
+        }
 
 
     }

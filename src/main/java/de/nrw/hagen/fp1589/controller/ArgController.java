@@ -3,7 +3,6 @@ package de.nrw.hagen.fp1589.controller;
 import de.nrw.hagen.fp1589.domain.ArgTree;
 import de.nrw.hagen.fp1589.domain.InformationNode;
 import de.nrw.hagen.fp1589.util.ArgTreeEvaluator;
-import de.nrw.hagen.fp1589.util.ArgTreeReaderWriter;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -17,18 +16,20 @@ public class ArgController {
 
 
 
-    ArgTreeEvaluator argTreeEvaluator;
+    final ArgTreeEvaluator argTreeEvaluator;
 
     /**
      * Constructor
-     *
+     * <p>
      *
      * @param argTreeEvaluator
      */
+    @SuppressWarnings("JavadocDeclaration")
     public ArgController(ArgTreeEvaluator argTreeEvaluator) {
         this.argTreeEvaluator = argTreeEvaluator;
     }
 
+    @SuppressWarnings("unused")
     public void loadTree(ArgTree argTree) {
         argTreeEvaluator.setArgTree(argTree);
     }
@@ -49,7 +50,7 @@ public class ArgController {
 
     /**
      * Program asks via console, which arguments apply to the user
-     *
+     * <p>
      *
      * @return InformationNode List.
      */
@@ -67,11 +68,11 @@ public class ArgController {
             System.out.println("ja oder nein oder warum?");
             Scanner in = new Scanner(System.in);
             String s = in.nextLine();
-            if ("ja".equals(s.toLowerCase())){
+            if ("ja".equalsIgnoreCase(s)){
                 acceptedArguments.add(node);
                 j++;
             }
-            else if ("warum".equals(s.toLowerCase()))
+            else if ("warum".equalsIgnoreCase(s))
                 showReasoning(node);
             else
                 j++;
@@ -94,10 +95,8 @@ public class ArgController {
                     node.getTriple(0).getSubject() + "\n" + node.getTriple(0).getObject() + "?" , "Premise erfüllt?", JOptionPane.YES_NO_OPTION);
             if (reply == JOptionPane.YES_OPTION){
                 acceptedArguments.add(node);
-                j++;
             }
-            else
-                j++;
+            j++;
         }
         return acceptedArguments;
     }
@@ -122,17 +121,17 @@ public class ArgController {
 
 
     public void showConclusionVisual(ArrayList<InformationNode> acceptedArguments) {
-        String ausgabe = "";
+        StringBuilder ausgabe = new StringBuilder();
         List<InformationNode> conlusions = argTreeEvaluator.getConclusionForUser(acceptedArguments);
         if (conlusions.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Keine Konklusion für die Argumente möglich!");
         } else {
             for (InformationNode node : conlusions) {
                 for (int i = 0; i < node.getTripleSize(); i++) {
-                    ausgabe += node.getClaimText() + "\n\n";
+                    ausgabe.append(node.getClaimText()).append("\n\n");
                 }
             }
-            JOptionPane.showMessageDialog(null, ausgabe);
+            JOptionPane.showMessageDialog(null, ausgabe.toString());
         }
     }
 
@@ -152,8 +151,6 @@ public class ArgController {
         }
     }
 
-    public void evaluateConclusion(ArrayList<InformationNode> acceptedArguments){
 
-    }
 
 }

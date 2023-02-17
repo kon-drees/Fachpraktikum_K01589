@@ -6,17 +6,19 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+@SuppressWarnings("unused")
 public class InformationNode implements Node {
 
-    private List<Triple> triples = new ArrayList<>();
+    private final List<Triple> triples = new ArrayList<>();
 
-    private List<RuleApplicationNode>  premiseOf = new ArrayList<>();
+    private final List<RuleApplicationNode>  premiseOf = new ArrayList<>();
 
-    private List<RuleApplicationNode> conclusionOf = new ArrayList<>();
+    private final List<RuleApplicationNode> conclusionOf = new ArrayList<>();
 
     private ConflictApplicationNode conflictingOf;
 
     //Nur SchemaNodes erlaubt. Art der Verknuepfung ergibt sich aus SchemaNode.
+    @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
     private List<SchemaNode> nodes;
     private long argStrength = 1;
 
@@ -127,9 +129,7 @@ public class InformationNode implements Node {
     }
 
 
-    //public Iterator<RuleApplicationNode> getPremiseOfNodes() {
-        //return this.premiseOf.iterator();
-    //}
+
 
     @JsonIgnore
     //Normalerweise nur conclusion eines RA-Nodes, oder auch mehrere moeglich?

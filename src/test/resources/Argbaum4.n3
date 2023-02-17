@@ -1,0 +1,41 @@
+<Arg12> <http://www.example.org/aif#source> _:B9cb1cd5aX2Dd07fX2D438eX2D957cX2Dce35cef7a785 .
+<Arg12> <http://www.example.org/aif#argStrength> "30"^^<http://www.w3.org/2001/XMLSchema#long> .
+<Arg12> <http://www.arg.dundee.ac.uk/aif#claimText> "Konsum von Alkohol <wirkt sich negativ aus> Schlafverhalten" .
+<Arg12> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.arg.dundee.ac.uk/aif#I-node> .
+<Arg0> <http://www.example.org/aif#source> _:Bbbde2bb9X2D8b44X2D4f4eX2D903eX2Dee624788032a .
+<Arg0> <http://www.example.org/aif#argStrength> "0"^^<http://www.w3.org/2001/XMLSchema#long> .
+<Arg0> <http://www.arg.dundee.ac.uk/aif#claimText> "Patient <leidet an> Durchschlafstörungen" .
+<Arg0> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.arg.dundee.ac.uk/aif#I-node> .
+_:B6af99092X2D56bfX2D452aX2D8421X2D76635f5343c4 <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> <Schlafverhalten> .
+_:B6af99092X2D56bfX2D452aX2D8421X2D76635f5343c4 <http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate> <wirkt_sich_positiv_aus> .
+_:B6af99092X2D56bfX2D452aX2D8421X2D76635f5343c4 <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <Konsum_von_Alkohol> .
+_:B6af99092X2D56bfX2D452aX2D8421X2D76635f5343c4 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement> .
+<Arg8> <http://www.example.org/aif#source> _:B2b173e4aX2Db782X2D41c3X2D8b55X2Daa39f98a9650 .
+<Arg8> <http://www.example.org/aif#argStrength> "0"^^<http://www.w3.org/2001/XMLSchema#long> .
+<Arg8> <http://www.arg.dundee.ac.uk/aif#claimText> "Patient <leidet nicht an> Durchschlafstörungen" .
+<Arg8> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.arg.dundee.ac.uk/aif#I-node> .
+_:Bbbde2bb9X2D8b44X2D4f4eX2D903eX2Dee624788032a <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> <Durchschlafstörungen> .
+_:Bbbde2bb9X2D8b44X2D4f4eX2D903eX2Dee624788032a <http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate> <leidet_an> .
+_:Bbbde2bb9X2D8b44X2D4f4eX2D903eX2Dee624788032a <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <Patient> .
+_:Bbbde2bb9X2D8b44X2D4f4eX2D903eX2Dee624788032a <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement> .
+_:B9cb1cd5aX2Dd07fX2D438eX2D957cX2Dce35cef7a785 <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> <Schlafverhalten> .
+_:B9cb1cd5aX2Dd07fX2D438eX2D957cX2Dce35cef7a785 <http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate> <wirkt_sich_negativ_aus> .
+_:B9cb1cd5aX2Dd07fX2D438eX2D957cX2Dce35cef7a785 <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <Konsum_von_Alkohol> .
+_:B9cb1cd5aX2Dd07fX2D438eX2D957cX2Dce35cef7a785 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement> .
+<RuleApplicationNodeImpl4> <http://www.arg.dundee.ac.uk/aif#Premise> <Arg12> .
+<RuleApplicationNodeImpl4> <http://www.arg.dundee.ac.uk/aif#Conclusion> <Arg0> .
+<RuleApplicationNodeImpl4> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.arg.dundee.ac.uk/aif#RA-node> .
+_:B2b173e4aX2Db782X2D41c3X2D8b55X2Daa39f98a9650 <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> <Durchschlafstörungen> .
+_:B2b173e4aX2Db782X2D41c3X2D8b55X2Daa39f98a9650 <http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate> <leidet_nicht_an> .
+_:B2b173e4aX2Db782X2D41c3X2D8b55X2Daa39f98a9650 <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <Patient> .
+_:B2b173e4aX2Db782X2D41c3X2D8b55X2Daa39f98a9650 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement> .
+<ConflictApplicationNodeImpl0> <http://www.arg.dundee.ac.uk/aif#Conflicting> <RuleApplicationNodeImpl4> .
+<ConflictApplicationNodeImpl0> <http://www.arg.dundee.ac.uk/aif#Conflicted> <RuleApplicationNodeImpl5> .
+<ConflictApplicationNodeImpl0> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.arg.dundee.ac.uk/aif#CA-node> .
+<Arg2> <http://www.example.org/aif#source> _:B6af99092X2D56bfX2D452aX2D8421X2D76635f5343c4 .
+<Arg2> <http://www.example.org/aif#argStrength> "70"^^<http://www.w3.org/2001/XMLSchema#long> .
+<Arg2> <http://www.arg.dundee.ac.uk/aif#claimText> "Konsum von Alkohol <wirkt sich positiv aus> Schlafverhalten" .
+<Arg2> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.arg.dundee.ac.uk/aif#I-node> .
+<RuleApplicationNodeImpl5> <http://www.arg.dundee.ac.uk/aif#Premise> <Arg2> .
+<RuleApplicationNodeImpl5> <http://www.arg.dundee.ac.uk/aif#Conclusion> <Arg8> .
+<RuleApplicationNodeImpl5> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.arg.dundee.ac.uk/aif#RA-node> .

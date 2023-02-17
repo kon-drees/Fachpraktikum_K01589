@@ -6,25 +6,19 @@ import de.nrw.hagen.fp1589.domain.InformationNode;
 import de.nrw.hagen.fp1589.domain.RuleApplicationNode;
 import de.nrw.hagen.fp1589.util.ArgTreeEvaluator;
 import de.nrw.hagen.fp1589.util.ArgTreeReaderWriter;
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextBoundsType;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
-
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -35,7 +29,7 @@ public class TreeViewShow  {
 
 
     private Scene main;
-    private Stage mainStage;
+    private final Stage mainStage;
 
     private boolean changed = false;
 
@@ -45,7 +39,8 @@ public class TreeViewShow  {
     }
 
 
-    public  Scene start(String filename) throws Exception {
+    @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
+    public  Scene start(String filename) {
         ArgTree tree = ArgTreeReaderWriter.importTree(filename);
         Hashtable<String, de.nrw.hagen.fp1589.domain.Node> premiseNodes = new Hashtable<>();
         boolean conflict = false;
@@ -55,9 +50,9 @@ public class TreeViewShow  {
 
 
         int x = 100;
-        int childx = 80;
+        int childx;
         int i = 0;
-        for (Iterator<InformationNode> it = tree.getInformationNodes(); it.hasNext(); ) {
+        for (@SuppressWarnings("DataFlowIssue") Iterator<InformationNode> it = tree.getInformationNodes(); it.hasNext(); ) {
             InformationNode inode = it.next();
             TextArea text = new TextArea(inode.getClaimText());
             text.setEditable(false);
@@ -82,8 +77,6 @@ public class TreeViewShow  {
             circle.setStrokeType(StrokeType.INSIDE);
             circle.setFill(Color.AZURE);
 
-            //circle.setLayoutX(200);
-            //circle.setLayoutX(100);
 
             final Text textRA = new Text("RA");
             textRA.setBoundsType(TextBoundsType.VISUAL);
@@ -172,8 +165,7 @@ public class TreeViewShow  {
 
                 controls.add(arrow);
 
-                if (childNode.getConflictedOf().getConflictingNode() instanceof InformationNode) {
-                    InformationNode conflictingINode = (InformationNode) childNode.getConflictedOf().getConflictingNode();
+                if (childNode.getConflictedOf().getConflictingNode() instanceof InformationNode conflictingINode) {
                     text = new TextArea(conflictingINode.getClaimText());
                     text.setEditable(false);
                     text.setLayoutY(110.0);
@@ -205,21 +197,17 @@ public class TreeViewShow  {
 
                 premiseNodes.put(premiseNode.getLabel() , premiseNode);
 
-                EventHandler<MouseEvent> eventChangeArgStrength = new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
-                        try {
-                            MyTextArea text = (MyTextArea) mouseEvent.getSource();
-                            InformationNode nodetochange = text.getNode();
-                            String neueArgStrength = JOptionPane.showInputDialog("Neue ArgStrength eingeben", nodetochange.getArgStrength());
-                            nodetochange.setArgStrength(Long.valueOf(neueArgStrength));
-                            text.setText(nodetochange.getClaimText() + "\n\nArgStrength: " + nodetochange.getArgStrength());
-                            changed = true;
-                        } catch (Exception ex) {
-                            throw new RuntimeException(ex);
-                        }
+                EventHandler<MouseEvent> eventChangeArgStrength = mouseEvent -> {
+                    try {
+                        MyTextArea text1 = (MyTextArea) mouseEvent.getSource();
+                        InformationNode nodetochange = text1.getNode();
+                        String neueArgStrength = JOptionPane.showInputDialog("Neue ArgStrength eingeben", nodetochange.getArgStrength());
+                        nodetochange.setArgStrength(Long.parseLong(neueArgStrength));
+                        text1.setText(nodetochange.getClaimText() + "\n\nArgStrength: " + nodetochange.getArgStrength());
+                        changed = true;
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
                     }
-
                 };
                 if (conflict) {
                     text.setOnMouseClicked(eventChangeArgStrength);
@@ -245,23 +233,20 @@ public class TreeViewShow  {
         button.setLayoutY(420);
         button.setLayoutX(100);
 
-        EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent e)
-            {
-                try {
-                    if (changed) {
-                        int reply = JOptionPane.showConfirmDialog(null, "Änderungen speichern?" , "Speichern?", JOptionPane.YES_NO_OPTION);
-                        if (reply == JOptionPane.YES_OPTION) {
-                            ArgTreeReaderWriter.writeTree(tree.getName(), tree);
-                        }
-                        changed = false;
+        EventHandler<ActionEvent> event = e -> {
+            try {
+                if (changed) {
+                    int reply = JOptionPane.showConfirmDialog(null, "Änderungen speichern?" , "Speichern?", JOptionPane.YES_NO_OPTION);
+                    if (reply == JOptionPane.YES_OPTION) {
+                        ArgTreeReaderWriter.writeTree(tree.getName(), tree);
                     }
-                    Scene sc = getMainScene();
-                    mainStage.setScene(sc);
-                    mainStage.setTitle("Hauptmenü");
-                } catch (Exception ex) {
-                    throw new RuntimeException(ex);
+                    changed = false;
                 }
+                Scene sc = getMainScene();
+                mainStage.setScene(sc);
+                mainStage.setTitle("Hauptmenü");
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
             }
         };
 
@@ -274,39 +259,26 @@ public class TreeViewShow  {
         button2.setLayoutY(420);
         button2.setLayoutX(400);
 
-        EventHandler<ActionEvent> event2 = new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent e)
-            {
-                try {
-                    ArgTreeEvaluator argTreeEvaluator = new ArgTreeEvaluator(tree);
-                    ArgController argController = new ArgController(argTreeEvaluator);
-                    argController.startVisualConversation();
+        EventHandler<ActionEvent> event2 = e -> {
+            try {
+                ArgTreeEvaluator argTreeEvaluator = new ArgTreeEvaluator(tree);
+                ArgController argController = new ArgController(argTreeEvaluator);
+                argController.startVisualConversation();
 
 
 
-                } catch (Exception ex) {
-                    throw new RuntimeException(ex);
-                }
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
             }
         };
 
         button2.setOnAction(event2);
         controls.add(button2);
 
-
-
-
-
         //Creating a Group object
         Group root = new Group(controls);
 
-        //StackPane stack = new StackPane();
-        //stack.getChildren().addAll(root, circle, textt);
-
-        //Creating a scene object
-        Scene scene = new Scene(root, 900, 500);
-
-        return scene;
+        return new Scene(root, 900, 500);
 
     }
 

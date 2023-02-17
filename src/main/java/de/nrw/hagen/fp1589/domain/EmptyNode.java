@@ -1,5 +1,6 @@
 package de.nrw.hagen.fp1589.domain;
 
+@SuppressWarnings("unused")
 public class EmptyNode implements Node{
     private String label;
 

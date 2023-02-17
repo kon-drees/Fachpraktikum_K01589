@@ -1,30 +1,27 @@
 package de.nrw.hagen.fp1589.controller;
 
+import de.nrw.hagen.fp1589.domain.ArgTree;
+import de.nrw.hagen.fp1589.util.ArgTreeEvaluator;
+import de.nrw.hagen.fp1589.util.ArgTreeReaderWriter;
+
+@SuppressWarnings("UnusedAssignment")
 public class FPController {
+    @SuppressWarnings("unused")
     public static void main(String[] args) {
-        String filename = "";
-        int requestNumber = 0;
-        if (args.length < 4) {
-            System.out.println("fehlerhafte Anzahl an Argumenten");
+
+        ArgTree argTree;
+        if (args.length < 1) {
+            argTree = ArgTreeReaderWriter.importTree("Argbaum1.n3");
+
+        }
+        else {
+            argTree = ArgTreeReaderWriter.importTree("args[0]");
         }
 
-        switch (args[0]) {
-            //Filename
-            case "-f" :
-                filename = args[1];
-                //Input request (Anfrage)
-            case "-i":
-                requestNumber = Integer.parseInt(args[1]);
-        }
-
-        switch (args[2]) {
-            //Filename
-            case "-f" :
-                filename = args[3];
-                //Input request (Anfrage)
-            case "-i":
-                requestNumber = Integer.parseInt(args[3]);
-        }
+        ArgTreeEvaluator argTreeEvaluator = new ArgTreeEvaluator(argTree);
+        ArgController argController = new ArgController(argTreeEvaluator);
+        //when
+        argController.StartConversation();
 
 
 

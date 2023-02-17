@@ -11,18 +11,18 @@ import java.util.*;
 /**
  * Evaluator of an argument tree
  */
+@SuppressWarnings({"SlowListContainsAll", "MismatchedQueryAndUpdateOfCollection", "SuspiciousMethodCalls", "DuplicatedCode", "DataFlowIssue"})
 public class ArgTreeEvaluator {
-
-
     private ArgTree argTree;
-    private List<String> argumentationList = new ArrayList<>();
-    private List<InformationNode> evaluatedNodes = new ArrayList<>(); // saves the references to already evaluated nodes
+    private final List<String> argumentationList = new ArrayList<>();
+    private final List<InformationNode> evaluatedNodes = new ArrayList<>(); // saves the references to already evaluated nodes
 
 
     public ArgTreeEvaluator(ArgTree argTree) {
         this.argTree = argTree;
     }
 
+    @SuppressWarnings("unused")
     public ArgTree getArgTree() {
         return argTree;
     }
@@ -39,7 +39,7 @@ public class ArgTreeEvaluator {
 
     /**
      * Returns the last information nodes to the input argument tree.
-     *
+     * <p>
      *
      * @return InformationNode List
      */
@@ -85,7 +85,7 @@ public class ArgTreeEvaluator {
             if (premissesIterator != null && !lastNodesList.contains(nodeToCheck)) {
                 lastNodesList.add(nodeToCheck);
             } else {
-                while (premissesIterator.hasNext()) {
+                while (Objects.requireNonNull(premissesIterator).hasNext()) {
                     List<Node> premissesNodesList = premissesIterator.next().getPremiseNodes();
                     for (Node premisses : premissesNodesList) {
                         if (!nodeToCheckSet.contains(premisses) && !lastNodesList.contains(premisses)) {
@@ -105,12 +105,12 @@ public class ArgTreeEvaluator {
 
     /**
      * Returns the last information nodes to the input argument tree.
-     *
+     * <p>
      *
      * @return InformationNode List
      */
     public List<InformationNode> getNodesForUser() {
-        List<InformationNode> lastNodesList = new ArrayList<>();
+        List<InformationNode> lastNodesList;
         lastNodesList = getLastNodes();
         evaluatedNodes.addAll(lastNodesList);
 
@@ -119,7 +119,7 @@ public class ArgTreeEvaluator {
 
 
     public List<InformationNode> getConclusionForUser(List<InformationNode> argumentList) {
-        List<InformationNode> conclusionList = new ArrayList<>();
+        List<InformationNode> conclusionList;
         conclusionList = evaluateArguments(argumentList);
         return conclusionList;
 
@@ -130,6 +130,7 @@ public class ArgTreeEvaluator {
     // returns the conclusion of the arguments
     private List<InformationNode> evaluateArguments(List<InformationNode> argumentList) {
         List<InformationNode> conclusionList = new ArrayList<>();
+        //noinspection ConstantValue
         if (argumentationList == null) {
             throw new RuntimeException("No Arguments");
         }
@@ -140,14 +141,11 @@ public class ArgTreeEvaluator {
         if (argumentList.get(0).getPremiseOf().size() == 0) {
             argumentList = this.searchPremiseINodes(argumentList);
         }
-        Iterator<InformationNode> rootIterator = argTree.getInformationNodes();
-        while (rootIterator.hasNext()) {
-            InformationNode node = rootIterator.next();
-        }
 
-        for (Node inputObj : argumentList) {
-            InformationNode inputArg = (InformationNode) inputObj;
-            List<RuleApplicationNode> ruleApplicationNodeList = inputArg.getPremiseOf();
+
+        for (InformationNode inputObj : argumentList) {
+
+            List<RuleApplicationNode> ruleApplicationNodeList = inputObj.getPremiseOf();
             for (RuleApplicationNode node :
                     ruleApplicationNodeList) {
                 if (!node.getPremiseNodes().isEmpty() && argumentList.containsAll(node.getPremiseNodes()) ) {
@@ -227,16 +225,9 @@ public class ArgTreeEvaluator {
                     }
 
                     else {
-                        if (argumentList.containsAll(node.getPremiseNodes()))
+                        if (argumentList.containsAll(node.getPremiseNodes()) && !conclusionList.contains((InformationNode) node.getConclusionNode()))
                             conclusionList.add((InformationNode) node.getConclusionNode());
                     }
-
-
-
-
-
-
-
                 }
             }
         }
@@ -246,7 +237,7 @@ public class ArgTreeEvaluator {
 
     /**
      * get the conclusion of the input argument of the tree
-     *
+     * <p>
      *
      * @param argument Input Argument
      * @return List InformationNode of the conclusion to the input argument
@@ -263,7 +254,7 @@ public class ArgTreeEvaluator {
 
     private List<InformationNode> searchPremiseINodes(List<InformationNode> inodes) {
         int i = 0;
-        boolean gefunden = false;
+        boolean gefunden;
         InformationNode testinode = null;
         List<InformationNode> foundINodes = new ArrayList<>();
         List<InformationNode> searchinINodes = this.getNodesForUser();

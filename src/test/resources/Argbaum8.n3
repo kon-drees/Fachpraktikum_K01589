@@ -1,0 +1,41 @@
+<Arg5> <http://www.example.org/aif#argStrength> "0"^^<http://www.w3.org/2001/XMLSchema#long> .
+<Arg5> <http://www.example.org/aif#source> _:Bfe2e65c6X2D0e16X2D4549X2Dbba2X2D76506ca35026 .
+<Arg5> <http://www.arg.dundee.ac.uk/aif#claimText> "Patient <leidet an> Einschlafstörungen" .
+<Arg5> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.arg.dundee.ac.uk/aif#I-node> .
+_:Bfe2e65c6X2D0e16X2D4549X2Dbba2X2D76506ca35026 <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> <Einschlafstörungen> .
+_:Bfe2e65c6X2D0e16X2D4549X2Dbba2X2D76506ca35026 <http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate> <leidet_an> .
+_:Bfe2e65c6X2D0e16X2D4549X2Dbba2X2D76506ca35026 <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <Patient> .
+_:Bfe2e65c6X2D0e16X2D4549X2Dbba2X2D76506ca35026 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement> .
+<Arg10> <http://www.example.org/aif#argStrength> "80"^^<http://www.w3.org/2001/XMLSchema#long> .
+<Arg10> <http://www.example.org/aif#source> _:Befbdf52dX2D6984X2D4be5X2Dbcf1X2D24b77b345757 .
+<Arg10> <http://www.arg.dundee.ac.uk/aif#claimText> "Stress in der Arbeit <wirkt sich negativ aus> Schlafverhalten" .
+<Arg10> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.arg.dundee.ac.uk/aif#I-node> .
+_:Befbdf52dX2D6984X2D4be5X2Dbcf1X2D24b77b345757 <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> <Schlafverhalten> .
+_:Befbdf52dX2D6984X2D4be5X2Dbcf1X2D24b77b345757 <http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate> <wirkt_sich_negativ_aus> .
+_:Befbdf52dX2D6984X2D4be5X2Dbcf1X2D24b77b345757 <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <Stress_in_der_Arbeit> .
+_:Befbdf52dX2D6984X2D4be5X2Dbcf1X2D24b77b345757 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement> .
+<Arg9> <http://www.example.org/aif#argStrength> "0"^^<http://www.w3.org/2001/XMLSchema#long> .
+<Arg9> <http://www.example.org/aif#source> _:B7eee39a4X2D67f6X2D43a6X2D948aX2D09d973506e1e .
+<Arg9> <http://www.arg.dundee.ac.uk/aif#claimText> "Patient <leidet nicht an> Einschlafstörungen" .
+<Arg9> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.arg.dundee.ac.uk/aif#I-node> .
+_:B7eee39a4X2D67f6X2D43a6X2D948aX2D09d973506e1e <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> <Einschlafstörungen> .
+_:B7eee39a4X2D67f6X2D43a6X2D948aX2D09d973506e1e <http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate> <leidet_nicht_an> .
+_:B7eee39a4X2D67f6X2D43a6X2D948aX2D09d973506e1e <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <Patient> .
+_:B7eee39a4X2D67f6X2D43a6X2D948aX2D09d973506e1e <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement> .
+<Arg6> <http://www.example.org/aif#argStrength> "30"^^<http://www.w3.org/2001/XMLSchema#long> .
+<Arg6> <http://www.example.org/aif#source> _:Bb97c725eX2Deb37X2D4c45X2D94b7X2D8b7ade6b73bb .
+<Arg6> <http://www.arg.dundee.ac.uk/aif#claimText> "stressiger Arbeitsalltag <schneller einschlafen> Menschen" .
+<Arg6> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.arg.dundee.ac.uk/aif#I-node> .
+_:Bb97c725eX2Deb37X2D4c45X2D94b7X2D8b7ade6b73bb <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> <Menschen> .
+_:Bb97c725eX2Deb37X2D4c45X2D94b7X2D8b7ade6b73bb <http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate> <schneller_einschlafen> .
+_:Bb97c725eX2Deb37X2D4c45X2D94b7X2D8b7ade6b73bb <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <stressiger_Arbeitsalltag> .
+_:Bb97c725eX2Deb37X2D4c45X2D94b7X2D8b7ade6b73bb <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement> .
+<RuleApplicationNodeImpl10> <http://www.arg.dundee.ac.uk/aif#Premise> <Arg10> .
+<RuleApplicationNodeImpl10> <http://www.arg.dundee.ac.uk/aif#Conclusion> <Arg5> .
+<RuleApplicationNodeImpl10> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.arg.dundee.ac.uk/aif#RA-node> .
+<RuleApplicationNodeImpl11> <http://www.arg.dundee.ac.uk/aif#Premise> <Arg6> .
+<RuleApplicationNodeImpl11> <http://www.arg.dundee.ac.uk/aif#Conclusion> <Arg9> .
+<RuleApplicationNodeImpl11> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.arg.dundee.ac.uk/aif#RA-node> .
+<ConflictApplicationNodeImpl3> <http://www.arg.dundee.ac.uk/aif#Conflicted> <RuleApplicationNodeImpl11> .
+<ConflictApplicationNodeImpl3> <http://www.arg.dundee.ac.uk/aif#Conflicting> <RuleApplicationNodeImpl10> .
+<ConflictApplicationNodeImpl3> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.arg.dundee.ac.uk/aif#CA-node> .

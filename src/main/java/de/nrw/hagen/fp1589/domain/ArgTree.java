@@ -1,12 +1,11 @@
 package de.nrw.hagen.fp1589.domain;
 
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 
 public class ArgTree {
-    private List<InformationNode> inodes;
+    private final List<InformationNode> inodes;
 
     private String name;
 
@@ -29,11 +28,6 @@ public class ArgTree {
     public InformationNode getInformationNode(int index) {
         return this.inodes.get(index);
     }
-
-    public Iterator<InformationNode> getEnumeration() {
-        return this.getEnumeration();
-    }
-
 
     public String getName() {
         return this.name;

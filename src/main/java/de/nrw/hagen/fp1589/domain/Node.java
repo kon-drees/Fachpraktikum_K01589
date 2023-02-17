@@ -1,9 +1,10 @@
 package de.nrw.hagen.fp1589.domain;
 
+@SuppressWarnings("unused")
 public interface Node {
 
-    public String getLabel();
+    String getLabel();
 
-    public void setLabel(String label) ;
+    void setLabel(String label) ;
 }
 

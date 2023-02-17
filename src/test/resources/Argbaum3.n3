@@ -22,7 +22,18 @@ _:B44154409X2Dc30fX2D4eaaX2Dafc1X2D11dccb016473 <http://www.w3.org/1999/02/22-rd
 _:B44154409X2Dc30fX2D4eaaX2Dafc1X2D11dccb016473 <http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate> <klagen_über> .
 _:B44154409X2Dc30fX2D4eaaX2Dafc1X2D11dccb016473 <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <Schichtarbeiter> .
 _:B44154409X2Dc30fX2D4eaaX2Dafc1X2D11dccb016473 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement> .
-<RuleApplicationNodeImpl0> <http://www.arg.dundee.ac.uk/aif#Premise> <Arg12> .
-<RuleApplicationNodeImpl0> <http://www.arg.dundee.ac.uk/aif#Premise> <Arg4> .
-<RuleApplicationNodeImpl0> <http://www.arg.dundee.ac.uk/aif#Conclusion> <Arg0> .
-<RuleApplicationNodeImpl0> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.arg.dundee.ac.uk/aif#RA-node> .
+<Arg7> <http://www.example.org/aif#argStrength> "0"^^<http://www.w3.org/2001/XMLSchema#long> .
+<Arg7> <http://www.example.org/aif#source> _:B15744934X2Da1c3X2D4e21X2D84e6X2D715e15b146bf .
+<Arg7> <http://www.arg.dundee.ac.uk/aif#claimText> "Alkohol <wirkt sich positiv aus> Schlafverhalten" .
+<Arg7> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.arg.dundee.ac.uk/aif#I-node> .
+_:B15744934X2Da1c3X2D4e21X2D84e6X2D715e15b146bf <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> <Schlafverhalten> .
+_:B15744934X2Da1c3X2D4e21X2D84e6X2D715e15b146bf <http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate> <wirkt_sich_positiv_aus> .
+_:B15744934X2Da1c3X2D4e21X2D84e6X2D715e15b146bf <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <Alkohol> .
+_:B15744934X2Da1c3X2D4e21X2D84e6X2D715e15b146bf <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement> .
+<RuleApplicationNodeImpl3> <http://www.arg.dundee.ac.uk/aif#Premise> <Arg12> .
+<RuleApplicationNodeImpl3> <http://www.arg.dundee.ac.uk/aif#Premise> <Arg4> .
+<RuleApplicationNodeImpl3> <http://www.arg.dundee.ac.uk/aif#Conclusion> <Arg0> .
+<RuleApplicationNodeImpl3> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.arg.dundee.ac.uk/aif#RA-node> .
+<ConflictApplicationNodeImpl0> <http://www.arg.dundee.ac.uk/aif#Conflicted> <RuleApplicationNodeImpl3> .
+<ConflictApplicationNodeImpl0> <http://www.arg.dundee.ac.uk/aif#Conflicting> <Arg7> .
+<ConflictApplicationNodeImpl0> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.arg.dundee.ac.uk/aif#CA-node> .

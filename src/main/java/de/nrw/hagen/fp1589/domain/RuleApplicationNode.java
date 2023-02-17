@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 public class RuleApplicationNode extends SchemaNode{
-    private List<Node> premiseNodes = new ArrayList<>();
+    private final List<Node> premiseNodes = new ArrayList<>();
 
     private Node conclusionNode;
 
@@ -18,21 +18,11 @@ public class RuleApplicationNode extends SchemaNode{
     //hier CA-Node moeglich
     private ConflictApplicationNode conflictingOf;
 
-    public int getSize() {
-        return this.premiseNodes.size();
-    }
-
-
 
     public List<Node> getPremiseNodes() {
         return this.premiseNodes;
     }
 
-
-
-    public void setPremiseNodes(List<Node> premiseNodes) {
-        this.premiseNodes = premiseNodes;
-    }
 
     @JsonIgnore
     public Node getConclusionNode() {
@@ -48,10 +38,11 @@ public class RuleApplicationNode extends SchemaNode{
     }
 
     public void clearPremiseNodes() {
-        this.premiseNodes.clear();;
+        this.premiseNodes.clear();
     }
 
     //Wenn der RA Node preferred ist, braucht der Baum nicht in das dispreferred Element laufen.
+    @SuppressWarnings("GrazieInspection")
     @JsonIgnore
     public PreferenceApplicationNode getPreferredOf() {
         return this.preferredOf;
