@@ -36,8 +36,10 @@ public class ArgTreeRestController {
         ArgTree tree = ArgTreeReaderWriter.importTree(this.tree);
         ArgTreeEvaluator argTreeEvaluator = new ArgTreeEvaluator(tree);
 
-        inodes.nodes().remove(0);
+        //inodes.nodes().remove(0);
         List<InformationNode> testnodes = argTreeEvaluator.getConclusionForUser(inodes.nodes());
+        System.out.println(testnodes.size());
+        System.out.println(testnodes.get(0).getClaimText());
 
         return new ArgTreeJson(testnodes);
     }
