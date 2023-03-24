@@ -29,6 +29,7 @@ Ferner biete die Anwendung einen Aufruf über die Kommandozeile.
 - Argument Interchange Format 
 - Ressource Description Framework
 - JavaFX
+- Representational State Transfer
 
 
 ### Funktionsweise der Anwendung:
